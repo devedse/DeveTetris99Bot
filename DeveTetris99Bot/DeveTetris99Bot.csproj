@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DirectShowLib-2005">
+      <HintPath>Lib\DirectShowLib-2005.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +55,50 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lib\DirectShowLibV2-1\src\amstream.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\amvideo.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\AssemblyInfo.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\atscpsipparser.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\austream.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\AxCore.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\AXExtend.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\BDAIface.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Bdatif.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\BDATypes.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Control.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\DES.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\DevEnum.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\DMODShow.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\dsattrib.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\DsUtils.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\dvbsiparser.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\DVDIf.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\DynGraph.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\encdec.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\EvCode.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\IL21Dec.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\MediaObj.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\MediaParam.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Misc.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Mixerocx.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\mmstream.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\mpconfig.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Mpeg2Data.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\mpeg2psiparser.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Mpeg2Structs.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\other.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\PlayList.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\QEdit.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\qnetwork.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\RegBag.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Sbe.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Tuner.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\TvRatings.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Uuids.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Vidcap.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\VidPort.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\Vmr9.cs" />
+    <Compile Include="Lib\DirectShowLibV2-1\src\VmRender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -63,6 +110,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Lib\DirectShowLibV2-1\Docs\LisezMoi.rtf" />
+    <None Include="Lib\DirectShowLibV2-1\Docs\Mixing Unmanaged &amp; Managed Direct3D.rtf" />
+    <None Include="Lib\DirectShowLibV2-1\Docs\ReadMe.rtf" />
+    <None Include="Lib\DirectShowLibV2-1\src\app.config" />
+    <None Include="Lib\DirectShowLibV2-1\src\DShowNET.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +127,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\DirectShowLibV2-1\Docs\interfaces.txt" />
+    <Content Include="Lib\DirectShowLibV2-1\lib\DirectShowLib-2005.dll" />
+    <Content Include="Lib\DirectShowLibV2-1\license.txt" />
+    <Content Include="Lib\DirectShowLibV2-1\readme.txt" />
+    <Content Include="Lib\DirectShowLibV2-1\src\DirectShowLib-2005.csproj" />
+    <Content Include="Lib\DirectShowLibV2-1\src\DirectShowLib-2005.sln" />
+    <Content Include="Lib\DirectShowLibV2-1\src\DirectShowLib-2008.csproj" />
+    <Content Include="Lib\DirectShowLibV2-1\src\DirectShowLib-2008.sln" />
+    <Content Include="Lib\DirectShowLibV2-1\src\DirectShowLib.sln" />
+    <Content Include="Lib\DirectShowLibV2-1\WhatsNew.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Capture\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
