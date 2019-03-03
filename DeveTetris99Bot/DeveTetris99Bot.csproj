@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArduinoSerial\ArduinoSerialConnector.cs" />
+    <Compile Include="ArduinoSerial\ArduinoSerialHelper.cs" />
     <Compile Include="Capture\DirectShowCapturer.cs" />
     <Compile Include="Capture\DirectShowLib.cs" />
     <Compile Include="Capture\FakeDetector.cs" />
