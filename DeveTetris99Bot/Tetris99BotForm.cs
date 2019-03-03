@@ -53,8 +53,8 @@ namespace DeveTetris99Bot
             }
             else
             {
-                _currentSerialConnection.Close();
                 _currentSerialConnection = null;
+                _currentSerialConnection.Close();
 
                 buttonSerialArduinoConnectDisconnect.Text = "Connect";
             }
