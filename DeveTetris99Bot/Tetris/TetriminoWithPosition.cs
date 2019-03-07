@@ -2,9 +2,9 @@
 {
     public class TetriminoWithPosition
     {
-        public Tetrimino Tetrimino { get; }
-        public int TopRow { get; }
-        public int LeftCol { get; }
+        public Tetrimino Tetrimino { get; set; }
+        public int TopRow { get; set; }
+        public int LeftCol { get; set; }
 
         public TetriminoWithPosition(Tetrimino tetrimino, int topRow, int leftCol)
         {

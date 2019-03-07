@@ -8,8 +8,6 @@ namespace DeveTetris99Bot.TetrisDetector
 {
     public static class TetrisDetectorCalculator
     {
-        private const int BlockSize = 20;
-
         private const int BlackColorTreshhold = 60;
         private const float LightnessTreshhold = 0.3f;
 
@@ -40,7 +38,7 @@ namespace DeveTetris99Bot.TetrisDetector
             int startY = gridStartY + stepY / 2;
 
             var g = panelToDrawIn.CreateGraphics();
-            for (int y = 0; y < 20; y++)
+            for (int y = 0; y < blocksHeight; y++)
             {
                 for (int x = 0; x < blocksWidth; x++)
                 {
@@ -83,7 +81,7 @@ namespace DeveTetris99Bot.TetrisDetector
                         darkest = Color.Red;
                     }
                     var br = new SolidBrush(darkest);
-                    g.FillRectangle(br, x * BlockSize, y * BlockSize, BlockSize, BlockSize);
+                    g.FillRectangle(br, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize, TetrisConstants.BlockSize, TetrisConstants.BlockSize);
                 }
             }
 
@@ -157,7 +155,7 @@ namespace DeveTetris99Bot.TetrisDetector
                         darkest = Color.Red;
                     }
                     var br = new SolidBrush(darkest);
-                    graphicsPanel2.FillRectangle(br, x * BlockSize, y * BlockSize + vakjeNummer * (BlockSize * 3), BlockSize, BlockSize);
+                    graphicsPanel2.FillRectangle(br, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize + vakjeNummer * (TetrisConstants.BlockSize * 3), TetrisConstants.BlockSize, TetrisConstants.BlockSize);
                 }
             }
         }

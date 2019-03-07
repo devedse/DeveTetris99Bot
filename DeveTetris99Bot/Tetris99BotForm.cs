@@ -1,7 +1,10 @@
 ﻿using DeveTetris99Bot.ArduinoSerial;
 using DeveTetris99Bot.Capture;
+using DeveTetris99Bot.Tetris;
 using DeveTetris99Bot.TetrisDetector;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DeveTetris99Bot
@@ -10,6 +13,7 @@ namespace DeveTetris99Bot
     {
         private DirectShowCapturer dsc;
         private ArduinoSerialConnector _currentSerialConnection;
+        private Player tetrisPlayer;
 
         public Tetris99BotForm()
         {
@@ -26,13 +30,27 @@ namespace DeveTetris99Bot
             });
 
             ReloadComPorts();
+
+            tetrisPlayer = new Player(panelSimulator);
+
+
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                tetrisPlayer.Play();
+            });
+
+            base.OnLoad(e);
         }
 
         private void ReloadComPorts()
         {
             comboBoxComConnections.Items.Clear();
             var foundComPorts = ArduinoSerialHelper.GetAvailableComConnections();
-            foreach(var foundComPort in foundComPorts)
+            foreach (var foundComPort in foundComPorts)
             {
                 comboBoxComConnections.Items.Add(foundComPort);
             }

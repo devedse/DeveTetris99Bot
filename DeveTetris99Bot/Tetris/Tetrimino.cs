@@ -12,6 +12,7 @@ namespace DeveTetris99Bot.Tetris
         public static Tetrimino Z { get; } = new Tetrimino("xx.\n" + ".xx");
         public static Tetrimino L { get; } = new Tetrimino("..x\n" + "xxx");
 
+        public static Tetrimino[] All { get; } = new Tetrimino[] { T, O, J, S, I, Z, L };
 
         public bool[,] TetriminoArray { get; }
 

@@ -5,8 +5,8 @@ namespace DeveTetris99Bot.Tetris
 {
     public class Board
     {
-        private int Width { get; }
-        private int Height { get; }
+        public int Width { get; }
+        public int Height { get; }
         public bool[,] BoardArray { get; }
         public int Penalty { get; set; }
 
@@ -40,7 +40,7 @@ namespace DeveTetris99Bot.Tetris
                 {
                     if (BoardArray[y, x])
                     {
-                        if (y >= Height - penalty)
+                        if (y >= Height - Penalty)
                         {
                             sb.Append('0');
                         }

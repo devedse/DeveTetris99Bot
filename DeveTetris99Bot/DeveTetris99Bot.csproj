@@ -56,6 +56,7 @@
     <Compile Include="Capture\FakeDetector.cs" />
     <Compile Include="Capture\MyStreamWriter.cs" />
     <Compile Include="Config\TetrisConstants.cs" />
+    <Compile Include="Helpers\IEnumerableExtensions.cs" />
     <Compile Include="Tetris99BotForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,7 +67,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TetrisDetector\TetrisDetectorCalculator.cs" />
     <Compile Include="Tetris\Board.cs" />
+    <Compile Include="Tetris\ColumnAndOrientationOrStash.cs" />
     <Compile Include="Tetris\DropResult.cs" />
+    <Compile Include="Tetris\FakeGameStateReader.cs" />
+    <Compile Include="Tetris\GameState.cs" />
+    <Compile Include="Tetris\IGameStateReader.cs" />
+    <Compile Include="Tetris\IKeyPresser.cs" />
+    <Compile Include="Tetris\Logic\BestMoveFinder.cs" />
+    <Compile Include="Tetris\Logic\EvaluationState.cs" />
+    <Compile Include="Tetris\Logic\Evaluator.cs" />
+    <Compile Include="Tetris\Logic\TetrisAction.cs" />
+    <Compile Include="Tetris\Logic\TetrisActionWithEvaluation.cs" />
+    <Compile Include="Tetris\Move.cs" />
     <Compile Include="Tetris\Player.cs" />
     <Compile Include="Tetris\Tetrimino.cs" />
     <Compile Include="Tetris\TetriminoWithPosition.cs" />
@@ -101,8 +113,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tetris\Logic\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

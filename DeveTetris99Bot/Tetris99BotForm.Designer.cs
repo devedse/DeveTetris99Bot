@@ -40,33 +40,31 @@
             this.buttonR = new System.Windows.Forms.Button();
             this.buttonD = new System.Windows.Forms.Button();
             this.buttonA = new System.Windows.Forms.Button();
+            this.panelSimulator = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(24, 23);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(2560, 1385);
+            this.pictureBox1.Size = new System.Drawing.Size(1280, 720);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(2720, 23);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6);
+            this.panel1.Location = new System.Drawing.Point(1360, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(400, 769);
+            this.panel1.Size = new System.Drawing.Size(200, 400);
             this.panel1.TabIndex = 1;
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(3176, 23);
-            this.panel2.Margin = new System.Windows.Forms.Padding(6);
+            this.panel2.Location = new System.Drawing.Point(1588, 12);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(400, 769);
+            this.panel2.Size = new System.Drawing.Size(200, 400);
             this.panel2.TabIndex = 2;
             // 
             // groupBox1
@@ -74,9 +72,11 @@
             this.groupBox1.Controls.Add(this.buttonSerialArduinoRefresh);
             this.groupBox1.Controls.Add(this.comboBoxComConnections);
             this.groupBox1.Controls.Add(this.buttonSerialArduinoConnectDisconnect);
-            this.groupBox1.Location = new System.Drawing.Point(2720, 833);
+            this.groupBox1.Location = new System.Drawing.Point(1360, 433);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(644, 161);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(322, 84);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Connection";
@@ -84,9 +84,10 @@
             // buttonSerialArduinoRefresh
             // 
             this.buttonSerialArduinoRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSerialArduinoRefresh.Location = new System.Drawing.Point(560, 39);
+            this.buttonSerialArduinoRefresh.Location = new System.Drawing.Point(280, 20);
+            this.buttonSerialArduinoRefresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonSerialArduinoRefresh.Name = "buttonSerialArduinoRefresh";
-            this.buttonSerialArduinoRefresh.Size = new System.Drawing.Size(78, 100);
+            this.buttonSerialArduinoRefresh.Size = new System.Drawing.Size(39, 52);
             this.buttonSerialArduinoRefresh.TabIndex = 2;
             this.buttonSerialArduinoRefresh.Text = "⟳";
             this.buttonSerialArduinoRefresh.UseVisualStyleBackColor = true;
@@ -95,16 +96,18 @@
             // comboBoxComConnections
             // 
             this.comboBoxComConnections.FormattingEnabled = true;
-            this.comboBoxComConnections.Location = new System.Drawing.Point(281, 72);
+            this.comboBoxComConnections.Location = new System.Drawing.Point(140, 37);
+            this.comboBoxComConnections.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxComConnections.Name = "comboBoxComConnections";
-            this.comboBoxComConnections.Size = new System.Drawing.Size(247, 33);
+            this.comboBoxComConnections.Size = new System.Drawing.Size(126, 21);
             this.comboBoxComConnections.TabIndex = 1;
             // 
             // buttonSerialArduinoConnectDisconnect
             // 
-            this.buttonSerialArduinoConnectDisconnect.Location = new System.Drawing.Point(57, 55);
+            this.buttonSerialArduinoConnectDisconnect.Location = new System.Drawing.Point(28, 29);
+            this.buttonSerialArduinoConnectDisconnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonSerialArduinoConnectDisconnect.Name = "buttonSerialArduinoConnectDisconnect";
-            this.buttonSerialArduinoConnectDisconnect.Size = new System.Drawing.Size(176, 64);
+            this.buttonSerialArduinoConnectDisconnect.Size = new System.Drawing.Size(88, 33);
             this.buttonSerialArduinoConnectDisconnect.TabIndex = 0;
             this.buttonSerialArduinoConnectDisconnect.Text = "Connect";
             this.buttonSerialArduinoConnectDisconnect.UseVisualStyleBackColor = true;
@@ -112,9 +115,10 @@
             // 
             // buttonL
             // 
-            this.buttonL.Location = new System.Drawing.Point(2700, 1200);
+            this.buttonL.Location = new System.Drawing.Point(1350, 624);
+            this.buttonL.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonL.Name = "buttonL";
-            this.buttonL.Size = new System.Drawing.Size(100, 100);
+            this.buttonL.Size = new System.Drawing.Size(50, 52);
             this.buttonL.TabIndex = 4;
             this.buttonL.Text = "L";
             this.buttonL.UseVisualStyleBackColor = true;
@@ -122,9 +126,10 @@
             // 
             // buttonU
             // 
-            this.buttonU.Location = new System.Drawing.Point(2800, 1100);
+            this.buttonU.Location = new System.Drawing.Point(1400, 572);
+            this.buttonU.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonU.Name = "buttonU";
-            this.buttonU.Size = new System.Drawing.Size(100, 100);
+            this.buttonU.Size = new System.Drawing.Size(50, 52);
             this.buttonU.TabIndex = 5;
             this.buttonU.Text = "U";
             this.buttonU.UseVisualStyleBackColor = true;
@@ -132,9 +137,10 @@
             // 
             // buttonR
             // 
-            this.buttonR.Location = new System.Drawing.Point(2900, 1200);
+            this.buttonR.Location = new System.Drawing.Point(1450, 624);
+            this.buttonR.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonR.Name = "buttonR";
-            this.buttonR.Size = new System.Drawing.Size(100, 100);
+            this.buttonR.Size = new System.Drawing.Size(50, 52);
             this.buttonR.TabIndex = 6;
             this.buttonR.Text = "R";
             this.buttonR.UseVisualStyleBackColor = true;
@@ -142,9 +148,10 @@
             // 
             // buttonD
             // 
-            this.buttonD.Location = new System.Drawing.Point(2800, 1300);
+            this.buttonD.Location = new System.Drawing.Point(1400, 676);
+            this.buttonD.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonD.Name = "buttonD";
-            this.buttonD.Size = new System.Drawing.Size(100, 100);
+            this.buttonD.Size = new System.Drawing.Size(50, 52);
             this.buttonD.TabIndex = 7;
             this.buttonD.Text = "D";
             this.buttonD.UseVisualStyleBackColor = true;
@@ -152,19 +159,28 @@
             // 
             // buttonA
             // 
-            this.buttonA.Location = new System.Drawing.Point(3100, 1300);
+            this.buttonA.Location = new System.Drawing.Point(1550, 676);
+            this.buttonA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonA.Name = "buttonA";
-            this.buttonA.Size = new System.Drawing.Size(100, 100);
+            this.buttonA.Size = new System.Drawing.Size(50, 52);
             this.buttonA.TabIndex = 8;
             this.buttonA.Text = "A";
             this.buttonA.UseVisualStyleBackColor = true;
             this.buttonA.Click += new System.EventHandler(this.buttonArduinoAction_Click);
             // 
+            // panelSimulator
+            // 
+            this.panelSimulator.Location = new System.Drawing.Point(1876, 12);
+            this.panelSimulator.Name = "panelSimulator";
+            this.panelSimulator.Size = new System.Drawing.Size(200, 400);
+            this.panelSimulator.TabIndex = 2;
+            // 
             // Tetris99BotForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(3844, 1687);
+            this.ClientSize = new System.Drawing.Size(2239, 739);
+            this.Controls.Add(this.panelSimulator);
             this.Controls.Add(this.buttonA);
             this.Controls.Add(this.buttonD);
             this.Controls.Add(this.buttonR);
@@ -174,7 +190,6 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
-            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Tetris99BotForm";
             this.Text = "Tetris 99 Bot Form";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -197,6 +212,7 @@
         private System.Windows.Forms.Button buttonR;
         private System.Windows.Forms.Button buttonD;
         private System.Windows.Forms.Button buttonA;
+        private System.Windows.Forms.Panel panelSimulator;
     }
 }
 
