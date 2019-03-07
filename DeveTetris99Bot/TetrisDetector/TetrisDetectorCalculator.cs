@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DeveTetris99Bot.Config;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -21,14 +22,14 @@ namespace DeveTetris99Bot.TetrisDetector
             int gridEndX = 800 / dividertje;
             int gridWidth = gridEndX - gridStartX;
 
-            int blocksWidth = 10;
+            int blocksWidth = TetrisConstants.BoardWidth;
 
 
             int gridStartY = 40 / dividertje;
             int gridEndY = 680 / dividertje;
             int gridHeight = gridEndY - gridStartY;
 
-            int blocksHeight = 20;
+            int blocksHeight = TetrisConstants.BoardHeight;
 
             int stepX = gridWidth / blocksWidth;
             int stepY = gridHeight / blocksHeight;

@@ -39,7 +39,7 @@ void loop() {
     String button = command.substring(0, command.indexOf('-'));
     String valueButton = command.substring(command.indexOf('-') + 1);
 
-    int delayNumber = 100;
+    int delayNumber = 1;
 
     digitalWrite(13, 1);
     
