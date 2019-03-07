@@ -1,11 +1,14 @@
 ﻿using DeveTetris99Bot.Config;
 using DeveTetris99Bot.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace DeveTetris99Bot.Tetris
 {
-    public class FakeGameState : IGameStateReader, IKeyPresser
+    public class FakeGame : IGameStateReader, IKeyPresser
     {
         private int cur = 0;
         private Board board;
@@ -13,12 +16,58 @@ namespace DeveTetris99Bot.Tetris
         private List<Tetrimino> nextBlocks;
         private TetriminoWithPosition curBlockWithPos;
         private Tetrimino inStash;
+        private readonly Panel drawPanel;
+        private readonly Label linesClearedLabel;
+        private Graphics g;
 
-        public FakeGameState()
+        private int linesCleared = 0;
+
+        public FakeGame(Panel drawPanel, Label linesClearedLabel)
         {
             board = new Board(TetrisConstants.BoardWidth, TetrisConstants.BoardHeight);
 
             RedetectBlocks();
+            this.drawPanel = drawPanel;
+            this.linesClearedLabel = linesClearedLabel;
+            g = drawPanel.CreateGraphics();
+        }
+
+        public void RedrawComplete()
+        {
+            g.Clear(Color.Black);
+            for (int y = 0; y < board.Height; y++)
+            {
+                for (int x = 0; x < board.Width; x++)
+                {
+                    bool shouldDraw = board.BoardArray[y, x];
+                    if (shouldDraw)
+                    {
+                        g.FillRectangle(Brushes.Red, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize, TetrisConstants.BlockSize, TetrisConstants.BlockSize);
+                    }
+                }
+            }
+        }
+
+        public void DrawDifferences(Board board1, Board board2)
+        {
+            for (int y = 0; y < board1.Height; y++)
+            {
+                for (int x = 0; x < board1.Width; x++)
+                {
+                    bool shouldDraw = board1.BoardArray[y, x] != board2.BoardArray[y, x];
+                    if (shouldDraw)
+                    {
+                        if (board1.BoardArray[y, x])
+                        {
+                            g.FillRectangle(Brushes.Red, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize, TetrisConstants.BlockSize, TetrisConstants.BlockSize);
+                        }
+                        else
+                        {
+                            g.FillRectangle(Brushes.Black, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize, TetrisConstants.BlockSize, TetrisConstants.BlockSize);
+                        }
+                    }
+                }
+            }
         }
 
         private void RedetectBlocks()
@@ -66,8 +115,28 @@ namespace DeveTetris99Bot.Tetris
                         curBlockWithPos.LeftCol++;
                         break;
                     case Move.Drop:
+                        var previousBord = board;
                         var result = board.drop(curBlockWithPos.Tetrimino, curBlockWithPos.LeftCol);
+
                         board = result.Board;
+                        linesCleared += result.LinesCleared;
+
+                        linesClearedLabel.Invoke(new Action(() =>
+                        {
+                            linesClearedLabel.Text = linesCleared.ToString();
+                        }));
+
+                        if (result.LinesCleared != 0)
+                        {
+                            RedrawComplete();
+                            //DrawDifferences(result.Board, previousBord);
+                        }
+                        else
+                        {
+                            //RedrawComplete();
+                            DrawDifferences(result.Board, previousBord);
+                        }
+
                         cur++;
                         RedetectBlocks();
                         break;

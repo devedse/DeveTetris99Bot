@@ -31,13 +31,14 @@ namespace DeveTetris99Bot
 
             ReloadComPorts();
 
-            tetrisPlayer = new Player(panelSimulator);
-
 
         }
 
         protected override void OnLoad(EventArgs e)
         {
+            var fakeGame = new FakeGame(panelSimulator, labelLinesCleared);
+            tetrisPlayer = new Player(fakeGame, fakeGame);
+
             Task.Run(() =>
             {
                 tetrisPlayer.Play();

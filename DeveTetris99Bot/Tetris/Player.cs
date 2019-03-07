@@ -1,10 +1,7 @@
-﻿using DeveTetris99Bot.Config;
-using DeveTetris99Bot.Tetris.Logic;
+﻿using DeveTetris99Bot.Tetris.Logic;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace DeveTetris99Bot.Tetris
 {
@@ -15,44 +12,26 @@ namespace DeveTetris99Bot.Tetris
         private readonly BestMoveFinder bestMoveFinder;
 
         private readonly GameState previousState;
-        private readonly Panel drawPanel;
         private ColumnAndOrientationOrStash target;
         private bool stashAllowed;
 
-        public Player(Panel drawPanel)
+        public Player(IGameStateReader gameStateReader, IKeyPresser keyPresser)
         {
-            var fakeGame = new FakeGameState();
-            gameStateReader = fakeGame;
-            keyPresser = fakeGame;
+            this.gameStateReader = gameStateReader;
+            this.keyPresser = keyPresser;
             bestMoveFinder = new BestMoveFinder(1);
 
             previousState = null;
 
             target = null;
             stashAllowed = true;
-            this.drawPanel = drawPanel;
         }
 
         public void Play()
         {
             while (true)
             {
-                Thread.Sleep(1);
                 var gameState = gameStateReader.ReadGameState();
-
-                var g = drawPanel.CreateGraphics();
-                g.Clear(Color.Black);
-                for (int y = 0; y < gameState.Board.Height; y++)
-                {
-                    for (int x = 0; x < gameState.Board.Width; x++)
-                    {
-                        bool shouldDraw = gameState.Board.BoardArray[y, x];
-                        if (shouldDraw)
-                        {
-                            g.FillRectangle(Brushes.Red, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize, TetrisConstants.BlockSize, TetrisConstants.BlockSize);
-                        }
-                    }
-                }
 
                 if (Broken(gameState))
                 {

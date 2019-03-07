@@ -41,6 +41,8 @@
             this.buttonD = new System.Windows.Forms.Button();
             this.buttonA = new System.Windows.Forms.Button();
             this.panelSimulator = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelLinesCleared = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -175,11 +177,31 @@
             this.panelSimulator.Size = new System.Drawing.Size(200, 400);
             this.panelSimulator.TabIndex = 2;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(1873, 453);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Lines cleared:";
+            // 
+            // labelLinesCleared
+            // 
+            this.labelLinesCleared.AutoSize = true;
+            this.labelLinesCleared.Location = new System.Drawing.Point(1953, 453);
+            this.labelLinesCleared.Name = "labelLinesCleared";
+            this.labelLinesCleared.Size = new System.Drawing.Size(13, 13);
+            this.labelLinesCleared.TabIndex = 10;
+            this.labelLinesCleared.Text = "0";
+            // 
             // Tetris99BotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2239, 739);
+            this.Controls.Add(this.labelLinesCleared);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panelSimulator);
             this.Controls.Add(this.buttonA);
             this.Controls.Add(this.buttonD);
@@ -195,6 +217,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -213,6 +236,8 @@
         private System.Windows.Forms.Button buttonD;
         private System.Windows.Forms.Button buttonA;
         private System.Windows.Forms.Panel panelSimulator;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelLinesCleared;
     }
 }
 
