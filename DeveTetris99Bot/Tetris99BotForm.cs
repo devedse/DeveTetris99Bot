@@ -72,8 +72,9 @@ namespace DeveTetris99Bot
             }
             else
             {
+                var toClose = _currentSerialConnection;
                 _currentSerialConnection = null;
-                _currentSerialConnection.Close();
+                toClose.Close();
 
                 buttonSerialArduinoConnectDisconnect.Text = "Connect";
             }
