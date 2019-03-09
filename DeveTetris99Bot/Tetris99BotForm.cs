@@ -90,7 +90,7 @@ namespace DeveTetris99Bot
             if (_currentSerialConnection != null)
             {
                 var button = (Button)sender;
-                _currentSerialConnection.SendButtonPress(button.Text);
+                _currentSerialConnection.SendButtonPress(button.Text.Split(' ').First());
             }
         }
     }

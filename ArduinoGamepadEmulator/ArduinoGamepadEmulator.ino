@@ -1,8 +1,8 @@
 #include <Joystick.h>
 
 Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,JOYSTICK_TYPE_GAMEPAD,
-  10, 0,                  // Button Count, Hat Switch Count
-  true, true, false,     // X and Y, but no Z Axis
+  10, 1,                  // Button Count, Hat Switch Count
+  true, true, true,     // X and Y, but no Z Axis
   false, false, false,   // No Rx, Ry, or Rz
   false, false,          // No rudder or throttle
   false, false, false);  // No accelerator, brake, or steering
@@ -39,10 +39,10 @@ void loop() {
     String button = command.substring(0, command.indexOf('-'));
     String valueButton = command.substring(command.indexOf('-') + 1);
 
-    int delayNumber = 1;
+    int delayNumber = 100;
 
     digitalWrite(13, 1);
-    
+
     if (button == "L") {
       Joystick.setXAxis(-1);
       delay(delayNumber);
@@ -59,16 +59,29 @@ void loop() {
       Joystick.setYAxis(1);
       delay(delayNumber);
       Joystick.setYAxis(0);
-    } else if (button == "A") {
-      Joystick.setButton(0, 1);
+    } else if (button == "LH") {
+      Joystick.setHatSwitch(0, 270);
       delay(delayNumber);
-      Joystick.setButton(0, 0);
+      Joystick.setHatSwitch(0, -1);
+    } else if (button == "RH") {
+      Joystick.setHatSwitch(0, 90);
+      delay(delayNumber);
+      Joystick.setHatSwitch(0, -1);
+    } else if (button == "UH") {
+      Joystick.setHatSwitch(0, 0);
+      delay(delayNumber);
+      Joystick.setHatSwitch(0, -1);
+    } else if (button == "DH") {
+      Joystick.setHatSwitch(0, 180);
+      delay(delayNumber);
+      Joystick.setHatSwitch(0, -1);
     } else {
-      int intbutton = button.toInt();
+      int intbutton = button.toInt() - 1;
       Joystick.pressButton(intbutton);
       delay(delayNumber);
       Joystick.releaseButton(intbutton);
     }
+    
 
     
     digitalWrite(13, 0);
