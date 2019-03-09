@@ -220,6 +220,7 @@
             this.buttonDH.TabIndex = 15;
             this.buttonDH.Text = "DH";
             this.buttonDH.UseVisualStyleBackColor = true;
+            this.buttonDH.Click += new System.EventHandler(this.buttonArduinoAction_Click);
             // 
             // buttonRH
             // 
@@ -230,6 +231,7 @@
             this.buttonRH.TabIndex = 14;
             this.buttonRH.Text = "RH";
             this.buttonRH.UseVisualStyleBackColor = true;
+            this.buttonRH.Click += new System.EventHandler(this.buttonArduinoAction_Click);
             // 
             // buttonUH
             // 
@@ -240,6 +242,7 @@
             this.buttonUH.TabIndex = 13;
             this.buttonUH.Text = "UH";
             this.buttonUH.UseVisualStyleBackColor = true;
+            this.buttonUH.Click += new System.EventHandler(this.buttonArduinoAction_Click);
             // 
             // buttonLH
             // 
@@ -250,6 +253,7 @@
             this.buttonLH.TabIndex = 12;
             this.buttonLH.Text = "LH";
             this.buttonLH.UseVisualStyleBackColor = true;
+            this.buttonLH.Click += new System.EventHandler(this.buttonArduinoAction_Click);
             // 
             // Tetris99BotForm
             // 
