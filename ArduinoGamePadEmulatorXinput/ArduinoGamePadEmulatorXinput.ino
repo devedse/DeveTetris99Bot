@@ -1,6 +1,3 @@
-
-#define F_USB 16000000
-
 #include <Joystick.h>
 #include "XInputPad.h"
 #include "util.h"

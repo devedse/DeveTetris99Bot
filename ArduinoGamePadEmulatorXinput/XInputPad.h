@@ -49,7 +49,7 @@ S21  XJj88  0u  1uY2.        X2k           .    k11E   v    7;ii:JuJvLvLvJ2:
 
 #include "Descriptors.h"
 
-#include <LUFA/Drivers/USB/USB.h>
+#include "LUFA/Drivers/USB/USB.h"
 
 /* Type Defines: */
 /** Type define for the joystick HID report structure, for creating and sending HID reports to the host PC.
@@ -101,4 +101,3 @@ void xbox_set_disconnect_callback(void (*callbackPtr)(void));
 #define XBOX_Y		0x80
 
 #endif
-
