@@ -144,79 +144,77 @@ int main(void) {
 }
 
 void setup_pins(void) {
+
+	// Setup pins
 	bit_clear(DDRF, 1 << 7);
 	bit_set(PORTF, 1 << 7);
 
-	// // Setup pins
-	// bit_clear(DDRF, 1 << 7);
-	// bit_set(PORTF, 1 << 7);
+	bit_clear(DDRF, 1 << 6);
+	bit_set(PORTF, 1 << 6);
 
-	// bit_clear(DDRF, 1 << 6);
-	// bit_set(PORTF, 1 << 6);
+	bit_clear(DDRF, 1 << 5);
+	bit_set(PORTF, 1 << 5);
 
-	// bit_clear(DDRF, 1 << 5);
-	// bit_set(PORTF, 1 << 5);
+	bit_clear(DDRF, 1 << 4);
+	bit_set(PORTF, 1 << 4);
 
-	// bit_clear(DDRF, 1 << 4);
-	// bit_set(PORTF, 1 << 4);
+	bit_clear(DDRF, 1 << 1);
+	bit_set(PORTF, 1 << 1);
 
-	// bit_clear(DDRF, 1 << 1);
-	// bit_set(PORTF, 1 << 1);
+	bit_clear(DDRF, 1 << 0);
+	bit_set(PORTF, 1 << 0);
 
-	// bit_clear(DDRF, 1 << 0);
-	// bit_set(PORTF, 1 << 0);
+	bit_clear(DDRB, 1 << 3);
+	bit_set(PORTB, 1 << 3);
 
-	// bit_clear(DDRB, 1 << 3);
-	// bit_set(PORTB, 1 << 3);
+	bit_clear(DDRB, 1 << 1);
+	bit_set(PORTB, 1 << 1);
 
-	// bit_clear(DDRB, 1 << 1);
-	// bit_set(PORTB, 1 << 1);
+	bit_clear(DDRD, 1 << 6);
+	bit_set(PORTD, 1 << 6);
 
-	// bit_clear(DDRD, 1 << 6);
-	// bit_set(PORTD, 1 << 6);
+	bit_clear(DDRB, 1 << 7);
+	bit_set(PORTB, 1 << 7);
 
-	// bit_clear(DDRB, 1 << 7);
-	// bit_set(PORTB, 1 << 7);
+	bit_clear(DDRB, 1 << 6);
+	bit_set(PORTB, 1 << 6);
 
-	// bit_clear(DDRB, 1 << 6);
-	// bit_set(PORTB, 1 << 6);
+	bit_clear(DDRB, 1 << 5);
+	bit_set(PORTB, 1 << 5);
 
-	// bit_clear(DDRB, 1 << 5);
-	// bit_set(PORTB, 1 << 5);
+	bit_clear(DDRB, 1 << 4);
+	bit_set(PORTB, 1 << 4);
 
-	// bit_clear(DDRB, 1 << 4);
-	// bit_set(PORTB, 1 << 4);
+	bit_clear(DDRE, 1 << 6);
+	bit_set(PORTE, 1 << 6);
 
-	// bit_clear(DDRE, 1 << 6);
-	// bit_set(PORTE, 1 << 6);
+	bit_clear(DDRD, 1 << 7);
+	bit_set(PORTD, 1 << 7);
 
-	// bit_clear(DDRD, 1 << 7);
-	// bit_set(PORTD, 1 << 7);
+	bit_clear(DDRC, 1 << 6);
+	bit_set(PORTC, 1 << 6);
 
-	// bit_clear(DDRC, 1 << 6);
-	// bit_set(PORTC, 1 << 6);
+	bit_clear(DDRD, 1 << 4);
+	bit_set(PORTD, 1 << 4);
 
-	// bit_clear(DDRD, 1 << 4);
-	// bit_set(PORTD, 1 << 4);
+	bit_clear(DDRD, 1 << 0);
+	bit_set(PORTD, 1 << 0);
 
-	// bit_clear(DDRD, 1 << 0);
-	// bit_set(PORTD, 1 << 0);
+	bit_clear(DDRD, 1 << 1);
+	bit_set(PORTD, 1 << 1);
 
-	// bit_clear(DDRD, 1 << 1);
-	// bit_set(PORTD, 1 << 1);
+	bit_clear(DDRD, 1 << 2);
+	bit_set(PORTD, 1 << 2);
 
-	// bit_clear(DDRD, 1 << 2);
-	// bit_set(PORTD, 1 << 2);
+	bit_clear(DDRD, 1 << 3);
+	bit_set(PORTD, 1 << 3);
 
-	// bit_clear(DDRD, 1 << 3);
-	// bit_set(PORTD, 1 << 3);
+	bit_clear(DDRB, 1 << 0);
+	bit_set(PORTB, 1 << 0);
 
-	// bit_clear(DDRB, 1 << 0);
-	// bit_set(PORTB, 1 << 0);
+	bit_clear(DDRB, 1 << 2);
+	bit_set(PORTB, 1 << 2);
 
-	// bit_clear(DDRB, 1 << 2);
-	// bit_set(PORTB, 1 << 2);
-
-	// bit_clear(DDRC, 1 << 7);
-	// bit_set(PORTC, 1 << 7);
+	bit_clear(DDRC, 1 << 7);
+	bit_set(PORTC, 1 << 7);
 }
