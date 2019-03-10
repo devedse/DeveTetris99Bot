@@ -92,7 +92,7 @@
 			 */
 			#define USB_DEVICE_OPT_LOWSPEED        (1 << 0)
 
-			#if (16000000 > 6000000)
+			#if (F_USB > 6000000)
 				/** Mask for the Options parameter of the \ref USB_Init() function. This indicates that the
 				 *  USB interface should be initialized in full speed (12Mb/s) mode.
 				 */

@@ -40,7 +40,7 @@ S21  XJj88  0u  1uY2.        X2k           .    k11E   v    7;ii:JuJvLvLvJ2:
 #include "XInputPad.h"
 
 USB_JoystickReport_Data_t gamepad_state;
-
+// uint8_t TXData[20] = {0x00, 0x14, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};  //Holds USB transmit packet data
 
 void (*padUSBConnectEventCallback)(void) = NULL;
 

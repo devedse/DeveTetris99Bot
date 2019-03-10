@@ -80,11 +80,11 @@
 			#error Do not include this file directly. Include LUFA/Drivers/USB/USB.h instead.
 		#endif
 
-		// #if !defined(F_USB)
-		// 	#error F_USB is not defined. You must define F_USB to the frequency of the unprescaled USB controller clock in your project makefile.
-		// #endif
+		#if !defined(F_USB)
+			#error F_USB is not defined. You must define F_USB to the frequency of the unprescaled USB controller clock in your project makefile.
+		#endif
 
-		#if (16000000 == 8000000)
+		#if (F_USB == 8000000)
 			#if (defined(__AVR_AT90USB82__) || defined(__AVR_AT90USB162__) || \
 			     defined(__AVR_ATmega8U2__) || defined(__AVR_ATmega16U2__) || \
 			     defined(__AVR_ATmega32U2__))

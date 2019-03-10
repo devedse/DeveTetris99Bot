@@ -225,9 +225,9 @@ const USB_Descriptor_String_t PROGMEM LanguageString =
  */
 const USB_Descriptor_String_t PROGMEM ManufacturerString =
 {
-	.Header                 = {.Size = USB_STRING_LEN(12), .Type = DTYPE_String},
+	.Header                 = {.Size = USB_STRING_LEN(7), .Type = DTYPE_String},
 
-	.UnicodeString          = L"kadevice.net"
+	.UnicodeString          = L"jarradx"
 };
 
 /** Product descriptor string. This is a Unicode string containing the product's details in human readable form,
@@ -236,9 +236,9 @@ const USB_Descriptor_String_t PROGMEM ManufacturerString =
  */
 const USB_Descriptor_String_t PROGMEM ProductString =
 {
-	.Header                 = {.Size = USB_STRING_LEN(31), .Type = DTYPE_String},
+	.Header                 = {.Size = USB_STRING_LEN(15), .Type = DTYPE_String},
 
-	.UnicodeString          = L"KADE - Kick Ass Dynamic Encoder"
+	.UnicodeString          = L"KADE 4 TARTARUS"
 };
 
 const USB_Descriptor_String_t PROGMEM VersionString =

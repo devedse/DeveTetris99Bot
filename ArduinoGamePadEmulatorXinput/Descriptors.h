@@ -46,7 +46,7 @@ S21  XJj88  0u  1uY2.        X2k           .    k11E   v    7;ii:JuJvLvLvJ2:
 #define _DESCRIPTORS_H_
 
 	/* Includes: */
-		#include "LUFA/Drivers/USB/USB.h"
+		#include <LUFA/Drivers/USB/USB.h>
 
 		#include <avr/pgmspace.h>
 	/* Macros: */
@@ -60,3 +60,4 @@ S21  XJj88  0u  1uY2.        X2k           .    k11E   v    7;ii:JuJvLvLvJ2:
 		                                    ATTR_WARN_UNUSED_RESULT ATTR_NON_NULL_PTR_ARG(3);
 
 #endif
+

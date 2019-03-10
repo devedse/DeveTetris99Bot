@@ -80,17 +80,17 @@
 			#error Do not include this file directly. Include LUFA/Drivers/USB/USB.h instead.
 		#endif
 
-		#if !defined(16000000)
-			#error 16000000 is not defined. You must define 16000000 to the frequency of the clock input to the USB module.
+		#if !defined(F_USB)
+			#error F_USB is not defined. You must define F_USB to the frequency of the clock input to the USB module.
 		#endif
 
 		#if (defined(USB_SERIES_UC3A3_AVR) || defined(USB_SERIES_UC3A4_AVR))
-			#if ((16000000 < 12000000) || (16000000 % 12000000))
-				#error Invalid 16000000 specified. 16000000 must be a multiple of 12MHz for UC3A3 and UC3A4 devices.
+			#if ((F_USB < 12000000) || (F_USB % 12000000))
+				#error Invalid F_USB specified. F_USB must be a multiple of 12MHz for UC3A3 and UC3A4 devices.
 			#endif
 		#else
-			#if ((16000000 < 48000000) || (16000000 % 48000000))
-				#error Invalid 16000000 specified. 16000000 must be a multiple of 48MHz for UC3A and UC3B devices.
+			#if ((F_USB < 48000000) || (F_USB % 48000000))
+				#error Invalid F_USB specified. F_USB must be a multiple of 48MHz for UC3A and UC3B devices.
 			#endif
 		#endif
 
