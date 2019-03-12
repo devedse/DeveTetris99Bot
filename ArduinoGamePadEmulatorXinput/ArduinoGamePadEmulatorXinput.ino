@@ -11,21 +11,19 @@ int led1Pin = 13;
 
 boolean isConnected = false;
 
-boolean pad_up, pad_down, pad_left, pad_right, pad_y, pad_b, pad_x, pad_a, pad_black,
-  pad_white, pad_start, pad_select, pad_l3, pad_r3, pad_l, pad_r, pad_left_analog_x,
-  pad_left_analog_y, pad_right_analog_x, pad_right_analog_y;
+bool pad_up, pad_down, pad_left, pad_right, pad_y, pad_b, pad_x, pad_a, pad_black, pad_white, pad_start, pad_select, pad_l3, pad_r3;
+uint8_t pad_left_analog_x,  pad_left_analog_y, pad_right_analog_x, pad_right_analog_y; //pad_l, pad_r, 
 
 void setup() {
-  pinMode(led1Pin,OUTPUT);
-  
-  digitalWrite(led1Pin, HIGH);   // turn the LED on (HIGH is the voltage level)    
+  pinMode(led1Pin,OUTPUT);  
+  digitalWrite(led1Pin, LOW);   // turn the LED on (HIGH is the voltage level)    
   
   CPU_PRESCALE(0);
 
   bit_set(MCUCR, 1 << JTD);
   bit_set(MCUCR, 1 << JTD);
   
-  Serial1.begin(9600);   
+  Serial1.begin(9600);
 
   xbox_init(true);
 
@@ -36,14 +34,6 @@ bool valuetje = false;
 
 void loop() {
   xbox_reset_watchdog();
-
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(200); // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(200);
-
-  valuetje ? bit_set(gamepad_state.digital_buttons_2, XBOX_B)  : bit_clear(gamepad_state.digital_buttons_2, XBOX_B);
-  valuetje = !valuetje;
   
   readSerialData();
 
@@ -54,72 +44,73 @@ void loop() {
 
     String button = command.substring(0, command.indexOf('-'));
     String valueButton = command.substring(command.indexOf('-') + 1);
-    uint8_t valueButtonInt = static_cast<uint8_t>(valueButton.toInt());
+    uint8_t valueButtonInt = valueButton.toInt();
+    
+    bool valueButtonBool = true;
+    if (valueButtonInt == 1) {
+      valueButtonBool = false;
+    }
 
-
-    digitalWrite(13, 1);
+    digitalWrite(13, valueButtonBool);
 
     if (button == "L") {
-      if (valueButtonInt) {
+      if (valueButtonBool) {
         pad_left_analog_x = 0x00;
       } else {
         pad_left_analog_x = 0x7F;
       }
     } else if (button == "R") {
-      if (valueButtonInt) {
+      if (valueButtonBool) {
         pad_left_analog_x = 0xFF;
       } else {
         pad_left_analog_x = 0x7F;
       }
     } else if (button == "U") {
-      if (valueButtonInt) {
+      if (valueButtonBool) {
         pad_left_analog_y = 0x00;
       } else {
         pad_left_analog_y = 0x7F;
       }
     } else if (button == "D") {
-      if (valueButtonInt) {
+      if (valueButtonBool) {
         pad_left_analog_y = 0xFF;
       } else {
         pad_left_analog_y = 0x7F;
       }
     } else if (button == "LH") {
-      pad_left = valueButtonInt;
+      pad_left = valueButtonBool;
     } else if (button == "RH") {
-      pad_right = valueButtonInt;
+      pad_right = valueButtonBool;
     } else if (button == "UH") {
-      pad_up = valueButtonInt;
+      pad_up = valueButtonBool;
     } else if (button == "DH") {
-      pad_down = valueButtonInt;
+      pad_down = valueButtonBool;
     } else {
       int intbutton = button.toInt() - 1;
 
       if (intbutton == 0) {
-        pad_a = valueButtonInt;
+        pad_a = valueButtonBool;
       } else if (intbutton == 1) {
-        pad_b = valueButtonInt;
+        pad_b = valueButtonBool;
       } else if (intbutton == 2) {
-        pad_x = valueButtonInt;
+        pad_x = valueButtonBool;
       } else if (intbutton == 3) {
-        pad_y = valueButtonInt;
+        pad_y = valueButtonBool;
       } else if (intbutton == 4) {
-        pad_start = valueButtonInt;
+        pad_start = valueButtonBool;
       } else if (intbutton == 5) {
-        pad_select = valueButtonInt;
+        pad_select = valueButtonBool;
       } else if (intbutton == 6) {
-        pad_black = valueButtonInt;
+        pad_black = valueButtonBool;
       } else if (intbutton == 7) {
-        pad_white = valueButtonInt;
+        pad_white = valueButtonBool;
       } else if (intbutton == 8) {
-        pad_l3 = valueButtonInt;
+        pad_l3 = valueButtonBool;
       } else if (intbutton == 9) {
-        pad_r3 = valueButtonInt;
+        pad_r3 = valueButtonBool;
       }
     }
-    
-
-    
-    digitalWrite(13, 0);
+        
     inputString = "";
   }
   
@@ -152,8 +143,10 @@ void loop() {
   gamepad_state.r_x = pad_right_analog_x * 257 + -32768;
   gamepad_state.r_y = pad_right_analog_y * -257 + 32767;
 
-  gamepad_state.lt = pad_l * 0xFF;
-  gamepad_state.rt = pad_r * 0xFF;
+  //gamepad_state.lt = pad_l * 0xFF;
+  //gamepad_state.rt = pad_r * 0xFF;
+
+  xbox_send_pad_state();
 }
 
 boolean getLedState()
