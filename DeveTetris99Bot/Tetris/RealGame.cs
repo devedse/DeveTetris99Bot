@@ -156,12 +156,7 @@ namespace DeveTetris99Bot.Tetris
                 var viableBlocks = nextBlocksCaptured.Skip(cur).Take(6).ToList();
 
                 var theNewBlock = viableBlocks.First();
-                int extra = 0;
-                if (theNewBlock.Width == 2)
-                {
-                    extra = 1;
-                }
-                curBlockWithPos = new TetriminoWithPosition(theNewBlock, 0, 3 + extra);
+                curBlockWithPos = new TetriminoWithPosition(theNewBlock, 0, 3 + (theNewBlock.Width == 2 ? 1 : 0));
                 nextBlocks = viableBlocks.Skip(1).ToList();
             }
         }
@@ -209,7 +204,7 @@ namespace DeveTetris99Bot.Tetris
                             RedrawComplete();
                             //DrawDifferences(result.Board, previousBord);
 
-                            
+
                         }
                         else
                         {
@@ -226,7 +221,7 @@ namespace DeveTetris99Bot.Tetris
                         DrawCurrentBlock();
 
 
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
                         break;
                     case Move.Stash:
                         var tmp = inStash;
@@ -236,11 +231,11 @@ namespace DeveTetris99Bot.Tetris
                         {
                             cur++;
                             RedetectBlocks();
-                            Thread.Sleep(1000);
+                            Thread.Sleep(500);
                         }
                         else
                         {
-                            curBlockWithPos = new TetriminoWithPosition(tmp, 0, 4);
+                            curBlockWithPos = new TetriminoWithPosition(tmp, 0, 3 + (tmp.Width == 2 ? 1 : 0));
                         }
                         break;
                     case Move.Rotate_CW:
