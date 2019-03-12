@@ -147,11 +147,9 @@ void loop() {
 boolean getLedState()
 {
   boolean state = false;
-  if(inputString.substring(5,7).equals("ON"))
-  {
+  if(inputString.substring(5,7).equals("ON")) {
     state = true;
-  }else
-  {
+  } else {
     state = false;
   }
   return state;
