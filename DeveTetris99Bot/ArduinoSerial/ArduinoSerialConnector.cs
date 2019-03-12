@@ -1,25 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DeveTetris99Bot.ArduinoSerial
 {
     public class ArduinoSerialConnector
     {
-        private readonly SerialPort _serialPort;
+        public const string FakePortName = "Fake";
 
-        public ArduinoSerialConnector(string selectedPort)
+        private readonly SerialPort _serialPort;
+        private readonly TextBox _logTextBox;
+
+        public ArduinoSerialConnector(string selectedPort, TextBox logTextBox)
         {
-            _serialPort = new SerialPort(selectedPort, 9600, Parity.None, 8, StopBits.One);
-            _serialPort.Open();
+            if (selectedPort != FakePortName)
+            {
+                _serialPort = new SerialPort(selectedPort, 9600, Parity.None, 8, StopBits.One);
+                _serialPort.Open();
+            }
+
+            _logTextBox = logTextBox;
         }
 
         public void Close()
         {
-            _serialPort.Close();
+            if (_serialPort != null)
+            {
+                _serialPort.Close();
+            }
         }
 
         //public void SendButtonPress(string button)
@@ -31,13 +39,25 @@ namespace DeveTetris99Bot.ArduinoSerial
         public void SendButtonDown(string button)
         {
             var txt = $"#{button}-0\n";
-            _serialPort.Write(txt);
+
+            if (_serialPort != null)
+            {
+                _serialPort.Write(txt);
+            }
+
+            _logTextBox.Text = txt + Environment.NewLine + _logTextBox.Text;
         }
 
         public void SendButtonUp(string button)
         {
             var txt = $"#{button}-1\n";
-            _serialPort.Write(txt);
+
+            if (_serialPort != null)
+            {
+                _serialPort.Write(txt);
+            }
+
+            _logTextBox.Text = txt + Environment.NewLine + _logTextBox.Text;
         }
     }
 }

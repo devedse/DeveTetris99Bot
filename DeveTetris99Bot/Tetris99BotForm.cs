@@ -50,6 +50,7 @@ namespace DeveTetris99Bot
         private void ReloadComPorts()
         {
             comboBoxComConnections.Items.Clear();
+            comboBoxComConnections.Items.Add(ArduinoSerialConnector.FakePortName);
             var foundComPorts = ArduinoSerialHelper.GetAvailableComConnections();
             foreach (var foundComPort in foundComPorts)
             {
@@ -57,7 +58,7 @@ namespace DeveTetris99Bot
             }
             if (foundComPorts.Any())
             {
-                comboBoxComConnections.SelectedItem = foundComPorts.First();
+                comboBoxComConnections.SelectedItem = ArduinoSerialConnector.FakePortName;
             }
         }
 
@@ -66,7 +67,7 @@ namespace DeveTetris99Bot
             if (_currentSerialConnection == null)
             {
                 var selectedPort = comboBoxComConnections.GetItemText(comboBoxComConnections.SelectedItem);
-                _currentSerialConnection = new ArduinoSerialConnector(selectedPort);
+                _currentSerialConnection = new ArduinoSerialConnector(selectedPort, textboxDebug);
 
                 buttonSerialArduinoConnectDisconnect.Text = "Disconnect";
             }

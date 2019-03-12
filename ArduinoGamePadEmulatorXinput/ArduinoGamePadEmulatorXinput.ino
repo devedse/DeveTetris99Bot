@@ -102,6 +102,18 @@ void loop() {
         pad_x = valueButtonInt;
       } else if (intbutton == 3) {
         pad_y = valueButtonInt;
+      } else if (intbutton == 4) {
+        pad_start = valueButtonInt;
+      } else if (intbutton == 5) {
+        pad_select = valueButtonInt;
+      } else if (intbutton == 6) {
+        pad_black = valueButtonInt;
+      } else if (intbutton == 7) {
+        pad_white = valueButtonInt;
+      } else if (intbutton == 8) {
+        pad_l3 = valueButtonInt;
+      } else if (intbutton == 9) {
+        pad_r3 = valueButtonInt;
       }
     }
     
@@ -121,9 +133,9 @@ void loop() {
   pad_l3     ? bit_set(gamepad_state.digital_buttons_1, XBOX_LEFT_STICK)  : bit_clear(gamepad_state.digital_buttons_1, XBOX_LEFT_STICK);
   pad_r3     ? bit_set(gamepad_state.digital_buttons_1, XBOX_RIGHT_STICK) : bit_clear(gamepad_state.digital_buttons_1, XBOX_RIGHT_STICK);
 
-  pad_a ? bit_set(gamepad_state.digital_buttons_2, XBOX_A)    : bit_clear(gamepad_state.digital_buttons_2, XBOX_A);
-  pad_b ? bit_set(gamepad_state.digital_buttons_2, XBOX_B)  : bit_clear(gamepad_state.digital_buttons_2, XBOX_B);
-  pad_x ? bit_set(gamepad_state.digital_buttons_2, XBOX_X)  : bit_clear(gamepad_state.digital_buttons_2, XBOX_X);
+  pad_a ? bit_set(gamepad_state.digital_buttons_2, XBOX_A) : bit_clear(gamepad_state.digital_buttons_2, XBOX_A);
+  pad_b ? bit_set(gamepad_state.digital_buttons_2, XBOX_B) : bit_clear(gamepad_state.digital_buttons_2, XBOX_B);
+  pad_x ? bit_set(gamepad_state.digital_buttons_2, XBOX_X) : bit_clear(gamepad_state.digital_buttons_2, XBOX_X);
   pad_y ? bit_set(gamepad_state.digital_buttons_2, XBOX_Y) : bit_clear(gamepad_state.digital_buttons_2, XBOX_Y);
 
   pad_black ? bit_set(gamepad_state.digital_buttons_2, XBOX_LB)    : bit_clear(gamepad_state.digital_buttons_2, XBOX_LB);
