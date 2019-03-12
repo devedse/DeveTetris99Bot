@@ -46,7 +46,7 @@ S21  XJj88  0u  1uY2.        X2k           .    k11E   v    7;ii:JuJvLvLvJ2:
 #define _DESCRIPTORS_H_
 
 	/* Includes: */
-		#include <USB.h>
+		#include "src/USB.h"
 
 		#include <avr/pgmspace.h>
 	/* Macros: */

@@ -1,0 +1,52 @@
+C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBCore.cpp
+
+//	General interrupt
+// ISR(USB_GEN_vect)
+// {
+// 	u8 udint = UDINT;
+// 	UDINT &= ~((1<<EORSTI) | (1<<SOFI)); // clear the IRQ flags for the IRQs which are handled here, except WAKEUPI and SUSPI (see below)
+
+// 	//	End of Reset
+// 	if (udint & (1<<EORSTI))
+// 	{
+// 		InitEP(0,EP_TYPE_CONTROL,EP_SINGLE_64);	// init ep0
+// 		_usbConfiguration = 0;			// not configured yet
+// 		UEIENX = 1 << RXSTPE;			// Enable interrupts for ep0
+// 	}
+
+// 	//	Start of Frame - happens every millisecond so we use it for TX and RX LED one-shot timing, too
+// 	if (udint & (1<<SOFI))
+// 	{
+// 		USB_Flush(CDC_TX);				// Send a tx frame if found
+		
+// 		// check whether the one-shot period has elapsed.  if so, turn off the LED
+// 		if (TxLEDPulse && !(--TxLEDPulse))
+// 			TXLED0;
+// 		if (RxLEDPulse && !(--RxLEDPulse))
+// 			RXLED0;
+// 	}
+
+// 	// the WAKEUPI interrupt is triggered as soon as there are non-idle patterns on the data
+// 	// lines. Thus, the WAKEUPI interrupt can occur even if the controller is not in the "suspend" mode.
+// 	// Therefore the we enable it only when USB is suspended
+// 	if (udint & (1<<WAKEUPI))
+// 	{
+// 		UDIEN = (UDIEN & ~(1<<WAKEUPE)) | (1<<SUSPE); // Disable interrupts for WAKEUP and enable interrupts for SUSPEND
+
+// 		//TODO
+// 		// WAKEUPI shall be cleared by software (USB clock inputs must be enabled before).
+// 		//USB_ClockEnable();
+// 		UDINT &= ~(1<<WAKEUPI);
+// 		_usbSuspendState = (_usbSuspendState & ~(1<<SUSPI)) | (1<<WAKEUPI);
+// 	}
+// 	else if (udint & (1<<SUSPI)) // only one of the WAKEUPI / SUSPI bits can be active at time
+// 	{
+// 		UDIEN = (UDIEN & ~(1<<SUSPE)) | (1<<WAKEUPE); // Disable interrupts for SUSPEND and enable interrupts for WAKEUP
+
+// 		//TODO
+// 		//USB_ClockDisable();
+
+// 		UDINT &= ~((1<<WAKEUPI) | (1<<SUSPI)); // clear any already pending WAKEUP IRQs and the SUSPI request
+// 		_usbSuspendState = (_usbSuspendState & ~(1<<WAKEUPI)) | (1<<SUSPI);
+// 	}
+// }
