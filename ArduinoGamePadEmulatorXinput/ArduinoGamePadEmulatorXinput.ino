@@ -10,26 +10,11 @@ boolean stringComplete = false;  // whether the string is complete
 int led1Pin = 13;
 
 boolean isConnected = false;
-int lastButtonState[5] = {0,0,0,0,0};
 
 void setup() {
-
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(300);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(300);      
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(300);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(300);      
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(300);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(300);      
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(300);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(300);      
+  pinMode(led1Pin,OUTPUT);
+  
+  digitalWrite(led1Pin, HIGH);   // turn the LED on (HIGH is the voltage level)    
   
   CPU_PRESCALE(0);
 
@@ -37,7 +22,6 @@ void setup() {
   bit_set(MCUCR, 1 << JTD);
   
   Serial1.begin(9600);   
-  pinMode(led1Pin,OUTPUT);
 
   xbox_init(true);
   
@@ -49,9 +33,9 @@ void loop() {
   xbox_reset_watchdog();
 
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100); // wait for a second
+  delay(200); // wait for a second
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);
+  delay(200);
 
   valuetje ? bit_set(gamepad_state.digital_buttons_2, XBOX_B)  : bit_clear(gamepad_state.digital_buttons_2, XBOX_B);
   valuetje = !valuetje;
