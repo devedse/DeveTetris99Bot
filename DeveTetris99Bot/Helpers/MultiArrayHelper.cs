@@ -1,7 +1,41 @@
-﻿namespace DeveTetris99Bot.Helpers
+﻿using DeveTetris99Bot.Tetris;
+
+namespace DeveTetris99Bot.Helpers
 {
     public static class MultiArrayHelper
     {
+        public static bool IsValidTetrino(bool[,] input)
+        {
+            foreach (var tet in Tetrimino.All)
+            {
+                if (AreEqual(input, tet))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool AreEqual(bool[,] input, Tetrimino tet)
+        {
+            if (tet.RotateableArray.GetLength(1) != input.GetLength(1) || tet.RotateableArray.GetLength(0) != input.GetLength(0))
+            {
+                return false;
+            }
+
+            for (int y = 0; y < tet.Height; y++)
+            {
+                for (int x = 0; x < tet.Width; x++)
+                {
+                    if (input[y, x] != tet.RotateableArray[y, x])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         public static bool AllInColumnFalse(bool[,] array, int column)
         {
             for (int i = 0; i < array.GetLength(0); i++)

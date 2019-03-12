@@ -209,7 +209,14 @@ namespace DeveTetris99Bot.TetrisDetector
             //    tetriminoArray = new bool[2, 2] { { tetriminoArray[0, 1], tetriminoArray[0, 2] }, { tetriminoArray[1, 1], tetriminoArray[1, 2] } };
             //}
 
-            return new Tetrimino(tetriminoArray);
+            if (MultiArrayHelper.IsValidTetrino(tetriminoArray))
+            {
+                return new Tetrimino(tetriminoArray);
+            }
+            else
+            {
+                return null;
+            }
         }
 
       

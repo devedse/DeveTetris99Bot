@@ -27,17 +27,17 @@ namespace DeveTetris99Bot
 
 
 
-            //dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
-            //{
-            //    var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
-            //    realGame.LoadCapturedGameData(nextBlocks);
-            //});
-
-            var dsc2 = new FakeDetector(this, pictureBox1, (bmp) =>
+            dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
             {
                 var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
                 realGame.LoadCapturedGameData(nextBlocks);
             });
+
+            //var dsc2 = new FakeDetector(this, pictureBox1, (bmp) =>
+            //{
+            //    var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
+            //    realGame.LoadCapturedGameData(nextBlocks);
+            //});
 
             ReloadComPorts();
 

@@ -240,13 +240,11 @@ namespace DeveTetris99Bot.Tetris
                         break;
                     case Move.Rotate_CW:
                         tetris99Form.CurrentSerialConnection.SendButtonPress("2");
-                        curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
+                        Rotate();
                         break;
                     case Move.Rotate_CWW:
                         tetris99Form.CurrentSerialConnection.SendButtonPress("1");
-                        curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
-                        curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
-                        curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
+                        Rotate();
                         break;
                     case Move.Enter:
                         break;
@@ -257,6 +255,19 @@ namespace DeveTetris99Bot.Tetris
 
             RedrawComplete();
             DrawCurrentBlock();
+        }
+
+        public void Rotate()
+        {
+            var preToTheLeft = curBlockWithPos.Tetrimino.DeductedLeftRows;
+            curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
+            var after = curBlockWithPos.Tetrimino.DeductedLeftRows;
+
+            Console.WriteLine($"Moving block {preToTheLeft - after}");
+            curBlockWithPos.LeftCol -= preToTheLeft - after;
+
+            curBlockWithPos.LeftCol = Math.Max(0, curBlockWithPos.LeftCol);
+            curBlockWithPos.LeftCol = Math.Min(curBlockWithPos.LeftCol, TetrisConstants.BoardWidth - curBlockWithPos.Tetrimino.Width);
         }
 
         public void Starting()

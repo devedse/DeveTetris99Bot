@@ -18,6 +18,8 @@ namespace DeveTetris99Bot.Tetris
         public bool[,] RotateableArray { get; }
         public bool[,] TetriminoArray { get; private set; }
 
+        public int DeductedLeftRows { get; private set; }
+
         public int Height => TetriminoArray.GetLength(0);
         public int Width => TetriminoArray.GetLength(1);
 
@@ -36,9 +38,11 @@ namespace DeveTetris99Bot.Tetris
 
             var temp = RotateableArray;
 
+
             while (MultiArrayHelper.AllInColumnFalse(temp, 0))
             {
                 temp = MultiArrayHelper.TrimColumn(0, temp);
+                DeductedLeftRows++;
             }
 
             while (MultiArrayHelper.AllInRowFalse(temp, 0))
