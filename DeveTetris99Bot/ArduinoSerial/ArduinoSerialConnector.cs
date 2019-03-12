@@ -22,9 +22,21 @@ namespace DeveTetris99Bot.ArduinoSerial
             _serialPort.Close();
         }
 
-        public void SendButtonPress(string button)
+        //public void SendButtonPress(string button)
+        //{
+        //    var txt = $"#{button}-2\n";
+        //    _serialPort.Write(txt);
+        //}
+
+        public void SendButtonDown(string button)
         {
-            var txt = $"#{button}-2\n";
+            var txt = $"#{button}-0\n";
+            _serialPort.Write(txt);
+        }
+
+        public void SendButtonUp(string button)
+        {
+            var txt = $"#{button}-1\n";
             _serialPort.Write(txt);
         }
     }

@@ -129,7 +129,8 @@
             this.buttonL.TabIndex = 4;
             this.buttonL.Text = "L";
             this.buttonL.UseVisualStyleBackColor = true;
-            this.buttonL.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonL.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonL.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // buttonU
             // 
@@ -140,7 +141,8 @@
             this.buttonU.TabIndex = 5;
             this.buttonU.Text = "U";
             this.buttonU.UseVisualStyleBackColor = true;
-            this.buttonU.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonU.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonU.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // buttonR
             // 
@@ -151,7 +153,8 @@
             this.buttonR.TabIndex = 6;
             this.buttonR.Text = "R";
             this.buttonR.UseVisualStyleBackColor = true;
-            this.buttonR.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonR.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonR.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // buttonD
             // 
@@ -162,7 +165,8 @@
             this.buttonD.TabIndex = 7;
             this.buttonD.Text = "D";
             this.buttonD.UseVisualStyleBackColor = true;
-            this.buttonD.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonD.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonD.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // buttonA
             // 
@@ -173,7 +177,8 @@
             this.buttonA.TabIndex = 8;
             this.buttonA.Text = "2 (A)";
             this.buttonA.UseVisualStyleBackColor = true;
-            this.buttonA.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonA.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonA.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // panelSimulator
             // 
@@ -209,7 +214,8 @@
             this.buttonB.TabIndex = 11;
             this.buttonB.Text = "1 (B)";
             this.buttonB.UseVisualStyleBackColor = true;
-            this.buttonB.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonB.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonB.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // buttonDH
             // 
@@ -220,7 +226,8 @@
             this.buttonDH.TabIndex = 15;
             this.buttonDH.Text = "DH";
             this.buttonDH.UseVisualStyleBackColor = true;
-            this.buttonDH.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonDH.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonDH.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // buttonRH
             // 
@@ -231,7 +238,8 @@
             this.buttonRH.TabIndex = 14;
             this.buttonRH.Text = "RH";
             this.buttonRH.UseVisualStyleBackColor = true;
-            this.buttonRH.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonRH.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonRH.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // buttonUH
             // 
@@ -242,7 +250,8 @@
             this.buttonUH.TabIndex = 13;
             this.buttonUH.Text = "UH";
             this.buttonUH.UseVisualStyleBackColor = true;
-            this.buttonUH.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonUH.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonUH.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // buttonLH
             // 
@@ -253,7 +262,8 @@
             this.buttonLH.TabIndex = 12;
             this.buttonLH.Text = "LH";
             this.buttonLH.UseVisualStyleBackColor = true;
-            this.buttonLH.Click += new System.EventHandler(this.buttonArduinoAction_Click);
+            this.buttonLH.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonLH.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
             // Tetris99BotForm
             // 

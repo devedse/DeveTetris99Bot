@@ -85,12 +85,30 @@ namespace DeveTetris99Bot
             ReloadComPorts();
         }
 
-        private void buttonArduinoAction_Click(object sender, System.EventArgs e)
+        //private void buttonArduinoAction_Click(object sender, System.EventArgs e)
+        //{
+        //    if (_currentSerialConnection != null)
+        //    {
+        //        var button = (Button)sender;
+        //        _currentSerialConnection.SendButtonPress(button.Text.Split(' ').First());
+        //    }
+        //}
+
+        private void buttonArduinoAction_Down(object sender, MouseEventArgs e)
         {
             if (_currentSerialConnection != null)
             {
                 var button = (Button)sender;
-                _currentSerialConnection.SendButtonPress(button.Text.Split(' ').First());
+                _currentSerialConnection.SendButtonDown(button.Text.Split(' ').First());
+            }
+        }
+
+        private void buttonArduinoAction_Up(object sender, MouseEventArgs e)
+        {
+            if (_currentSerialConnection != null)
+            {
+                var button = (Button)sender;
+                _currentSerialConnection.SendButtonUp(button.Text.Split(' ').First());
             }
         }
     }
