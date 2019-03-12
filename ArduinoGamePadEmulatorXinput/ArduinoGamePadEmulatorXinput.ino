@@ -11,6 +11,10 @@ int led1Pin = 13;
 
 boolean isConnected = false;
 
+boolean pad_up, pad_down, pad_left, pad_right, pad_y, pad_b, pad_x, pad_a, pad_black,
+  pad_white, pad_start, pad_select, pad_l3, pad_r3, pad_l, pad_r, pad_left_analog_x,
+  pad_left_analog_y, pad_right_analog_x, pad_right_analog_y;
+
 void setup() {
   pinMode(led1Pin,OUTPUT);
   
@@ -24,7 +28,8 @@ void setup() {
   Serial1.begin(9600);   
 
   xbox_init(true);
-  
+
+  pad_left_analog_x = pad_left_analog_y = pad_right_analog_x = pad_right_analog_y = 0x7F;
 }
 
 bool valuetje = false;
@@ -49,74 +54,55 @@ void loop() {
 
     String button = command.substring(0, command.indexOf('-'));
     String valueButton = command.substring(command.indexOf('-') + 1);
+    uint8_t valueButtonInt = static_cast<uint8_t>(valueButton.toInt());
 
-    int delayNumber = 100;
 
     digitalWrite(13, 1);
 
     if (button == "L") {
-      gamepad_state.l_x = -32768;
-      //Joystick.setXAxis(-1);
-      delay(delayNumber);
-      //Joystick.setXAxis(0);
-      gamepad_state.l_x = 0;
+      if (valueButtonInt) {
+        pad_left_analog_x = 0x00;
+      } else {
+        pad_left_analog_x = 0x7F;
+      }
     } else if (button == "R") {
-      gamepad_state.l_x = 32768;
-      //Joystick.setXAxis(1);
-      delay(delayNumber);
-      //Joystick.setXAxis(0);
-      gamepad_state.l_x = 0;
+      if (valueButtonInt) {
+        pad_left_analog_x = 0xFF;
+      } else {
+        pad_left_analog_x = 0x7F;
+      }
     } else if (button == "U") {
-      gamepad_state.l_y = -32768;
-      //Joystick.setYAxis(-1);
-      delay(delayNumber);
-      //Joystick.setYAxis(0);
-      gamepad_state.l_y = 0;
+      if (valueButtonInt) {
+        pad_left_analog_y = 0x00;
+      } else {
+        pad_left_analog_y = 0x7F;
+      }
     } else if (button == "D") {
-      gamepad_state.l_y = 32768;
-      //Joystick.setYAxis(1);
-      delay(delayNumber);
-      //Joystick.setYAxis(0);
-      gamepad_state.l_y = 0;
+      if (valueButtonInt) {
+        pad_left_analog_y = 0xFF;
+      } else {
+        pad_left_analog_y = 0x7F;
+      }
     } else if (button == "LH") {
-      bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_LEFT);
-      //Joystick.setHatSwitch(0, 270);
-      delay(delayNumber);
-      //Joystick.setHatSwitch(0, -1);
-      bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_LEFT);
+      pad_left = valueButtonInt;
     } else if (button == "RH") {
-      bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_RIGHT);
-      //Joystick.setHatSwitch(0, 90);
-      delay(delayNumber);
-      //Joystick.setHatSwitch(0, -1);
-      bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_RIGHT);
+      pad_right = valueButtonInt;
     } else if (button == "UH") {
-      bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_UP);
-      //Joystick.setHatSwitch(0, 0);
-      delay(delayNumber);
-      //Joystick.setHatSwitch(0, -1);
-      bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_UP);
+      pad_up = valueButtonInt;
     } else if (button == "DH") {
-      bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_DOWN);
-      //Joystick.setHatSwitch(0, 180);
-      delay(delayNumber);
-      //Joystick.setHatSwitch(0, -1);
-      bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_DOWN);
+      pad_down = valueButtonInt;
     } else {
       int intbutton = button.toInt() - 1;
 
       if (intbutton == 0) {
-        bit_set(gamepad_state.digital_buttons_2, XBOX_B);
-        delay(delayNumber);
-        bit_clear(gamepad_state.digital_buttons_2, XBOX_B);
+        pad_a = valueButtonInt;
       } else if (intbutton == 1) {
-        bit_set(gamepad_state.digital_buttons_2, XBOX_A);
-        delay(delayNumber);
-        bit_clear(gamepad_state.digital_buttons_2, XBOX_A);
+        pad_b = valueButtonInt;
+      } else if (intbutton == 2) {
+        pad_x = valueButtonInt;
+      } else if (intbutton == 3) {
+        pad_y = valueButtonInt;
       }
-      //Joystick.pressButton(intbutton);
-      //delay(delayNumber);
-      //Joystick.releaseButton(intbutton);
     }
     
 
@@ -125,7 +111,37 @@ void loop() {
     inputString = "";
   }
   
-  xbox_send_pad_state();
+  pad_up    ? bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_UP)    : bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_UP);
+  pad_down  ? bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_DOWN)  : bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_DOWN);
+  pad_left  ? bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_LEFT)  : bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_LEFT);
+  pad_right ? bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_RIGHT) : bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_RIGHT);
+
+  pad_start  ? bit_set(gamepad_state.digital_buttons_1, XBOX_START)       : bit_clear(gamepad_state.digital_buttons_1, XBOX_START);
+  pad_select ? bit_set(gamepad_state.digital_buttons_1, XBOX_BACK)        : bit_clear(gamepad_state.digital_buttons_1, XBOX_BACK);
+  pad_l3     ? bit_set(gamepad_state.digital_buttons_1, XBOX_LEFT_STICK)  : bit_clear(gamepad_state.digital_buttons_1, XBOX_LEFT_STICK);
+  pad_r3     ? bit_set(gamepad_state.digital_buttons_1, XBOX_RIGHT_STICK) : bit_clear(gamepad_state.digital_buttons_1, XBOX_RIGHT_STICK);
+
+  pad_a ? bit_set(gamepad_state.digital_buttons_2, XBOX_A)    : bit_clear(gamepad_state.digital_buttons_2, XBOX_A);
+  pad_b ? bit_set(gamepad_state.digital_buttons_2, XBOX_B)  : bit_clear(gamepad_state.digital_buttons_2, XBOX_B);
+  pad_x ? bit_set(gamepad_state.digital_buttons_2, XBOX_X)  : bit_clear(gamepad_state.digital_buttons_2, XBOX_X);
+  pad_y ? bit_set(gamepad_state.digital_buttons_2, XBOX_Y) : bit_clear(gamepad_state.digital_buttons_2, XBOX_Y);
+
+  pad_black ? bit_set(gamepad_state.digital_buttons_2, XBOX_LB)    : bit_clear(gamepad_state.digital_buttons_2, XBOX_LB);
+  pad_white ? bit_set(gamepad_state.digital_buttons_2, XBOX_RB)    : bit_clear(gamepad_state.digital_buttons_2, XBOX_RB);
+
+  if(pad_start && pad_select) {
+    bit_set(gamepad_state.digital_buttons_2, XBOX_HOME);
+  } else {
+    bit_clear(gamepad_state.digital_buttons_2, XBOX_HOME);
+  }
+
+  gamepad_state.l_x = pad_left_analog_x * 257 + -32768;
+  gamepad_state.l_y = pad_left_analog_y * -257 + 32767;
+  gamepad_state.r_x = pad_right_analog_x * 257 + -32768;
+  gamepad_state.r_y = pad_right_analog_y * -257 + 32767;
+
+  gamepad_state.lt = pad_l * 0xFF;
+  gamepad_state.rt = pad_r * 0xFF;
 }
 
 boolean getLedState()
