@@ -141,7 +141,7 @@ namespace DeveTetris99Bot.Tetris
             }
             foreach (Tetrimino tetrimino in gameState.NextTetriminoes)
             {
-                if (tetrimino == null || tetrimino.Width == 4 && tetrimino.Height == 4)
+                if (tetrimino == null)
                 {
                     return true;
                 }

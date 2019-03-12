@@ -1,4 +1,5 @@
 ﻿using DeveTetris99Bot.Config;
+using DeveTetris99Bot.Helpers;
 using DeveTetris99Bot.Tetris;
 using System.Collections.Generic;
 using System.Drawing;
@@ -116,7 +117,7 @@ namespace DeveTetris99Bot.TetrisDetector
 
         private static Tetrimino DetectNextBlock(Bitmap data, int stepX, int stepY, int xStart, int yStart, Graphics graphicsPanel2, int vakjeNummer)
         {
-            bool[,] tetriminoArray = new bool[2, 4];
+            bool[,] tetriminoArray = new bool[4, 4];
 
             for (int y = 0; y < 2; y++)
             {
@@ -160,32 +161,97 @@ namespace DeveTetris99Bot.TetrisDetector
                     else
                     {
                         darkest = Color.Red;
-                        tetriminoArray[y, x] = true;
+                        tetriminoArray[y + 1, x] = true;
                     }
                     var br = new SolidBrush(darkest);
                     graphicsPanel2.FillRectangle(br, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize + vakjeNummer * (TetrisConstants.BlockSize * 3), TetrisConstants.BlockSize, TetrisConstants.BlockSize);
                 }
             }
 
-            if (tetriminoArray[1, 0] == false &&
-                tetriminoArray[1, 1] == false &&
-                tetriminoArray[1, 2] == false &&
-                tetriminoArray[1, 3] == false)
+            if (tetriminoArray[0, 0] == false &&
+                tetriminoArray[0, 1] == false &&
+                tetriminoArray[0, 2] == false &&
+                tetriminoArray[0, 3] == false &&
+                tetriminoArray[0, 3] == false &&
+                tetriminoArray[1, 3] == false &&
+                tetriminoArray[2, 3] == false &&
+                tetriminoArray[3, 3] == false)
             {
-                tetriminoArray = new bool[1, 4] { { tetriminoArray[0, 0], tetriminoArray[0, 1], tetriminoArray[0, 2], tetriminoArray[0, 3] } };
+                tetriminoArray = MultiArrayHelper.TrimArray(0, 3, tetriminoArray);
             }
 
-            if (tetriminoArray[0, 3] == false && tetriminoArray[1, 3] == false)
+            int rowToCheck = tetriminoArray.GetLength(0) - 1;
+
+            if (tetriminoArray[0, 0] == false &&
+                tetriminoArray[rowToCheck, 1] == false &&
+                tetriminoArray[rowToCheck, 2] == false &&
+                tetriminoArray[1, 0] == false &&
+                tetriminoArray[2, 0] == false)
             {
-                tetriminoArray = new bool[2, 3] { { tetriminoArray[0, 0], tetriminoArray[0, 1], tetriminoArray[0, 2] }, { tetriminoArray[1, 0], tetriminoArray[1, 1], tetriminoArray[1, 2] } };
+                tetriminoArray = MultiArrayHelper.TrimArray(rowToCheck, 0, tetriminoArray);
             }
 
-            if (tetriminoArray[0, 0] == false && tetriminoArray[1, 0] == false)
-            {
-                tetriminoArray = new bool[2, 2] { { tetriminoArray[0, 1], tetriminoArray[0, 2] }, { tetriminoArray[1, 1], tetriminoArray[1, 2] } };
-            }
+            //    if (tetriminoArray[1, 0] == false &&
+            //    tetriminoArray[1, 1] == false &&
+            //    tetriminoArray[1, 2] == false &&
+            //    tetriminoArray[1, 3] == false)
+            //{
+            //    tetriminoArray = new bool[1, 4] { { tetriminoArray[0, 0], tetriminoArray[0, 1], tetriminoArray[0, 2], tetriminoArray[0, 3] } };
+            //}
+
+            //if (tetriminoArray[0, 3] == false && tetriminoArray[1, 3] == false)
+            //{
+            //    tetriminoArray = new bool[2, 3] { { tetriminoArray[0, 0], tetriminoArray[0, 1], tetriminoArray[0, 2] }, { tetriminoArray[1, 0], tetriminoArray[1, 1], tetriminoArray[1, 2] } };
+            //}
+
+            //if (tetriminoArray[0, 0] == false && tetriminoArray[1, 0] == false)
+            //{
+            //    tetriminoArray = new bool[2, 2] { { tetriminoArray[0, 1], tetriminoArray[0, 2] }, { tetriminoArray[1, 1], tetriminoArray[1, 2] } };
+            //}
 
             return new Tetrimino(tetriminoArray);
         }
+
+      
+
+        //private static bool[,] RemoveColumn(bool[,] originalArray, int columnToRemove)
+        //{
+        //    bool[,] result = new bool[originalArray.GetLength(0), originalArray.GetLength(1) - 1];
+
+        //    for (int i = 0, j = 0; i < originalArray.GetLength(0); i++)
+        //    {
+        //        for (int k = 0, u = 0; k < originalArray.GetLength(1); k++)
+        //        {
+        //            if (k == columnToRemove)
+        //                continue;
+
+        //            result[j, u] = originalArray[i, k];
+        //            u++;
+        //        }
+        //        j++;
+        //    }
+
+        //    return result;
+        //}
+
+        //private static bool[,] RemoveRow(bool[,] originalArray, int rowToRemove)
+        //{
+        //    bool[,] result = new bool[originalArray.GetLength(0), originalArray.GetLength(1) - 1];
+
+        //    for (int i = 0, j = 0; i < originalArray.GetLength(0); i++)
+        //    {
+        //        for (int k = 0, u = 0; k < originalArray.GetLength(1); k++)
+        //        {
+        //            if (k == columnToRemove)
+        //                continue;
+
+        //            result[j, u] = originalArray[i, k];
+        //            u++;
+        //        }
+        //        j++;
+        //    }
+
+        //    return result;
+        //}
     }
 }

@@ -57,6 +57,7 @@
     <Compile Include="Capture\MyStreamWriter.cs" />
     <Compile Include="Config\TetrisConstants.cs" />
     <Compile Include="Helpers\IEnumerableExtensions.cs" />
+    <Compile Include="Helpers\MultiArrayHelper.cs" />
     <Compile Include="Tetris99BotForm.cs">
       <SubType>Form</SubType>
     </Compile>
