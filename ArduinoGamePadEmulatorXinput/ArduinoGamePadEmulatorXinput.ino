@@ -1,13 +1,5 @@
-#include <Joystick.h>
 #include "XInputPad.h"
 #include "util.h"
-
-Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,JOYSTICK_TYPE_GAMEPAD,
-  10, 1,                  // Button Count, Hat Switch Count
-  true, true, true,     // X and Y, but no Z Axis
-  false, false, false,   // No Rx, Ry, or Rz
-  false, false,          // No rudder or throttle
-  false, false, false);  // No accelerator, brake, or steering
 
 
   
@@ -18,19 +10,36 @@ boolean stringComplete = false;  // whether the string is complete
 int led1Pin = 13;
 
 boolean isConnected = false;
-int lastButtonState[5] = {0,0,0,0,0};
 
 void setup() {
-  // Initialize Joystick Library
-  Joystick.begin();
-  Joystick.setXAxisRange(-1, 1);
-  Joystick.setYAxisRange(-1, 1);
-  Serial1.begin(9600);
   pinMode(led1Pin,OUTPUT);
+  
+  digitalWrite(led1Pin, HIGH);   // turn the LED on (HIGH is the voltage level)    
+  
+  CPU_PRESCALE(0);
+
+  bit_set(MCUCR, 1 << JTD);
+  bit_set(MCUCR, 1 << JTD);
+  
+  Serial1.begin(9600);   
+
+  xbox_init(true);
+  
 }
 
-void loop() {
+bool valuetje = false;
 
+void loop() {
+  xbox_reset_watchdog();
+
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(200); // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(200);
+
+  valuetje ? bit_set(gamepad_state.digital_buttons_2, XBOX_B)  : bit_clear(gamepad_state.digital_buttons_2, XBOX_B);
+  valuetje = !valuetje;
+  
   readSerialData();
 
   if(stringComplete)
@@ -46,42 +55,68 @@ void loop() {
     digitalWrite(13, 1);
 
     if (button == "L") {
-      Joystick.setXAxis(-1);
+      gamepad_state.l_x = -32768;
+      //Joystick.setXAxis(-1);
       delay(delayNumber);
-      Joystick.setXAxis(0);
+      //Joystick.setXAxis(0);
+      gamepad_state.l_x = 0;
     } else if (button == "R") {
-      Joystick.setXAxis(1);
+      gamepad_state.l_x = 32768;
+      //Joystick.setXAxis(1);
       delay(delayNumber);
-      Joystick.setXAxis(0);
+      //Joystick.setXAxis(0);
+      gamepad_state.l_x = 0;
     } else if (button == "U") {
-      Joystick.setYAxis(-1);
+      gamepad_state.l_y = -32768;
+      //Joystick.setYAxis(-1);
       delay(delayNumber);
-      Joystick.setYAxis(0);
+      //Joystick.setYAxis(0);
+      gamepad_state.l_y = 0;
     } else if (button == "D") {
-      Joystick.setYAxis(1);
+      gamepad_state.l_y = 32768;
+      //Joystick.setYAxis(1);
       delay(delayNumber);
-      Joystick.setYAxis(0);
+      //Joystick.setYAxis(0);
+      gamepad_state.l_y = 0;
     } else if (button == "LH") {
-      Joystick.setHatSwitch(0, 270);
+      bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_LEFT);
+      //Joystick.setHatSwitch(0, 270);
       delay(delayNumber);
-      Joystick.setHatSwitch(0, -1);
+      //Joystick.setHatSwitch(0, -1);
+      bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_LEFT);
     } else if (button == "RH") {
-      Joystick.setHatSwitch(0, 90);
+      bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_RIGHT);
+      //Joystick.setHatSwitch(0, 90);
       delay(delayNumber);
-      Joystick.setHatSwitch(0, -1);
+      //Joystick.setHatSwitch(0, -1);
+      bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_RIGHT);
     } else if (button == "UH") {
-      Joystick.setHatSwitch(0, 0);
+      bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_UP);
+      //Joystick.setHatSwitch(0, 0);
       delay(delayNumber);
-      Joystick.setHatSwitch(0, -1);
+      //Joystick.setHatSwitch(0, -1);
+      bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_UP);
     } else if (button == "DH") {
-      Joystick.setHatSwitch(0, 180);
+      bit_set(gamepad_state.digital_buttons_1, XBOX_DPAD_DOWN);
+      //Joystick.setHatSwitch(0, 180);
       delay(delayNumber);
-      Joystick.setHatSwitch(0, -1);
+      //Joystick.setHatSwitch(0, -1);
+      bit_clear(gamepad_state.digital_buttons_1, XBOX_DPAD_DOWN);
     } else {
       int intbutton = button.toInt() - 1;
-      Joystick.pressButton(intbutton);
-      delay(delayNumber);
-      Joystick.releaseButton(intbutton);
+
+      if (intbutton == 0) {
+        bit_set(gamepad_state.digital_buttons_2, XBOX_B);
+        delay(delayNumber);
+        bit_clear(gamepad_state.digital_buttons_2, XBOX_B);
+      } else if (intbutton == 1) {
+        bit_set(gamepad_state.digital_buttons_2, XBOX_A);
+        delay(delayNumber);
+        bit_clear(gamepad_state.digital_buttons_2, XBOX_A);
+      }
+      //Joystick.pressButton(intbutton);
+      //delay(delayNumber);
+      //Joystick.releaseButton(intbutton);
     }
     
 
@@ -89,7 +124,8 @@ void loop() {
     digitalWrite(13, 0);
     inputString = "";
   }
-
+  
+  xbox_send_pad_state();
 }
 
 boolean getLedState()

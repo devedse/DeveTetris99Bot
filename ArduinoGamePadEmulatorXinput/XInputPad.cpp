@@ -147,4 +147,3 @@ void xbox_set_connect_callback(void (*callbackPtr)(void)) {
 void xbox_set_disconnect_callback(void (*callbackPtr)(void)) {
 	padUSBDisconnectEventCallback = callbackPtr;
 }
-
