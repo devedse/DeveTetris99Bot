@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DeveTetris99Bot.ArduinoSerial
@@ -30,11 +31,13 @@ namespace DeveTetris99Bot.ArduinoSerial
             }
         }
 
-        //public void SendButtonPress(string button)
-        //{
-        //    var txt = $"#{button}-2\n";
-        //    _serialPort.Write(txt);
-        //}
+        public void SendButtonPress(string button)
+        {
+            SendButtonDown(button);
+            Thread.Sleep(100);
+            SendButtonUp(button);
+            Thread.Sleep(2000);
+        }
 
         public void SendButtonDown(string button)
         {
@@ -45,7 +48,10 @@ namespace DeveTetris99Bot.ArduinoSerial
                 _serialPort.Write(txt);
             }
 
-            _logTextBox.Text = txt + Environment.NewLine + _logTextBox.Text;
+            _logTextBox.Invoke(new Action(() =>
+            {
+                _logTextBox.Text = txt + Environment.NewLine + _logTextBox.Text;
+            }));
         }
 
         public void SendButtonUp(string button)
@@ -57,7 +63,10 @@ namespace DeveTetris99Bot.ArduinoSerial
                 _serialPort.Write(txt);
             }
 
-            _logTextBox.Text = txt + Environment.NewLine + _logTextBox.Text;
+            _logTextBox.Invoke(new Action(() =>
+            {
+                _logTextBox.Text = txt + Environment.NewLine + _logTextBox.Text;
+            }));
         }
     }
 }

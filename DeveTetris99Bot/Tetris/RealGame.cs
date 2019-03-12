@@ -1,35 +1,114 @@
 ﻿using DeveTetris99Bot.Config;
-using DeveTetris99Bot.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DeveTetris99Bot.Tetris
 {
-    public class FakeGame : IGameStateReader, IKeyPresser
+    public class RealGame : IGameStateReader, IKeyPresser
     {
         private int cur = 0;
         private Board board;
 
         private List<Tetrimino> nextBlocks;
+        private List<Tetrimino> nextBlocksCaptured = new List<Tetrimino>();
         private TetriminoWithPosition curBlockWithPos;
         private Tetrimino inStash;
+        private readonly Tetris99BotForm tetris99Form;
         private readonly Panel drawPanel;
         private readonly Label linesClearedLabel;
         private Graphics g;
 
         private int linesCleared = 0;
 
-        public FakeGame(Panel drawPanel, Label linesClearedLabel)
+        private bool running = false;
+
+        public RealGame(Tetris99BotForm tetris99Form, Panel drawPanel, Label linesClearedLabel)
         {
             board = new Board(TetrisConstants.BoardWidth, TetrisConstants.BoardHeight);
 
-            RedetectBlocks();
+            this.tetris99Form = tetris99Form;
             this.drawPanel = drawPanel;
             this.linesClearedLabel = linesClearedLabel;
             g = drawPanel.CreateGraphics();
+        }
+
+        public void LoadCapturedGameData(List<Tetrimino> theNewIncomingTetriminos)
+        {
+            if (running)
+            {
+                foreach (var item in theNewIncomingTetriminos)
+                {
+                    if (!Tetrimino.All.Any(z => z.Equals(item)))
+                    {
+                        Console.WriteLine("Deze is wss corrupt");
+                        return;
+                    }
+                }
+
+                lock (nextBlocksCaptured)
+                {
+                    if (nextBlocksCaptured == null)
+                    {
+                        nextBlocksCaptured.AddRange(theNewIncomingTetriminos);
+                    }
+                    else
+                    {
+                        int aCount = cur;
+                        int newCount = 0;
+
+                        int brrr = cur;
+
+                        while (newCount < theNewIncomingTetriminos.Count)
+                        {
+
+
+                            if (aCount >= nextBlocksCaptured.Count)
+                            {
+                                var toAdd = theNewIncomingTetriminos.Skip(newCount).ToList();
+                                foreach (var block in toAdd)
+                                {
+                                    Console.WriteLine($"Adding block: {block}");
+                                }
+                                nextBlocksCaptured.AddRange(toAdd);
+                                return;
+                            }
+                            else
+                            {
+                                if (theNewIncomingTetriminos[newCount].Equals(nextBlocksCaptured[aCount]))
+                                {
+                                    aCount++;
+                                    newCount++;
+                                }
+                                else
+                                {
+                                    newCount = 0;
+                                    brrr++;
+                                    aCount = brrr;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void DrawCurrentBlock()
+        {
+            for (int y = 0; y < curBlockWithPos.Tetrimino.Height; y++)
+            {
+                for (int x = 0; x < curBlockWithPos.Tetrimino.Width; x++)
+                {
+                    bool shouldDraw = curBlockWithPos.Tetrimino.TetriminoArray[y, x];
+                    if (shouldDraw)
+                    {
+                        g.FillRectangle(Brushes.Red, (x + curBlockWithPos.LeftCol) * TetrisConstants.BlockSize, (y + curBlockWithPos.TopRow) * TetrisConstants.BlockSize, TetrisConstants.BlockSize, TetrisConstants.BlockSize);
+                    }
+                }
+            }
         }
 
         public void RedrawComplete()
@@ -72,10 +151,19 @@ namespace DeveTetris99Bot.Tetris
 
         private void RedetectBlocks()
         {
-            var viableBlocks = InfinoListo().Skip(cur).Take(6).ToList();
+            lock (nextBlocksCaptured)
+            {
+                var viableBlocks = nextBlocksCaptured.Skip(cur).Take(6).ToList();
 
-            curBlockWithPos = new TetriminoWithPosition(viableBlocks.First(), 0, 4);
-            nextBlocks = viableBlocks.Skip(1).ToList();
+                var theNewBlock = viableBlocks.First();
+                int extra = 0;
+                if (theNewBlock.Width == 2)
+                {
+                    extra = 1;
+                }
+                curBlockWithPos = new TetriminoWithPosition(theNewBlock, 0, 3 + extra);
+                nextBlocks = viableBlocks.Skip(1).ToList();
+            }
         }
 
         public GameState ReadGameState()
@@ -90,18 +178,6 @@ namespace DeveTetris99Bot.Tetris
             cur++;
         }
 
-        private IEnumerable<Tetrimino> InfinoListo()
-        {
-            while (true)
-            {
-                var list = Tetrimino.All.Randomize();
-                foreach (var item in list)
-                {
-                    yield return item;
-                }
-            }
-        }
-
         public void MakeMove(List<Move> moves)
         {
             foreach (var move in moves)
@@ -109,9 +185,11 @@ namespace DeveTetris99Bot.Tetris
                 switch (move)
                 {
                     case Move.Left:
+                        tetris99Form.CurrentSerialConnection.SendButtonPress("LH");
                         curBlockWithPos.LeftCol--;
                         break;
                     case Move.Right:
+                        tetris99Form.CurrentSerialConnection.SendButtonPress("RH");
                         curBlockWithPos.LeftCol++;
                         break;
                     case Move.Drop:
@@ -130,23 +208,35 @@ namespace DeveTetris99Bot.Tetris
                         {
                             RedrawComplete();
                             //DrawDifferences(result.Board, previousBord);
+
+                            
                         }
                         else
                         {
-                            //RedrawComplete();
-                            DrawDifferences(result.Board, previousBord);
+                            RedrawComplete();
+                            //DrawDifferences(result.Board, previousBord);
+
                         }
+
+                        tetris99Form.CurrentSerialConnection.SendButtonPress("UH");
 
                         cur++;
                         RedetectBlocks();
+
+                        DrawCurrentBlock();
+
+
+                        Thread.Sleep(1000);
                         break;
                     case Move.Stash:
                         var tmp = inStash;
                         inStash = curBlockWithPos.Tetrimino;
+                        tetris99Form.CurrentSerialConnection.SendButtonPress("7");
                         if (tmp == null)
                         {
                             cur++;
                             RedetectBlocks();
+                            Thread.Sleep(1000);
                         }
                         else
                         {
@@ -154,9 +244,11 @@ namespace DeveTetris99Bot.Tetris
                         }
                         break;
                     case Move.Rotate_CW:
+                        tetris99Form.CurrentSerialConnection.SendButtonPress("2");
                         curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
                         break;
                     case Move.Rotate_CWW:
+                        tetris99Form.CurrentSerialConnection.SendButtonPress("1");
                         curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
                         curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
                         curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
@@ -167,10 +259,23 @@ namespace DeveTetris99Bot.Tetris
                         break;
                 }
             }
+
+            RedrawComplete();
+            DrawCurrentBlock();
         }
 
         public void Starting()
         {
+            running = true;
+
+            while (nextBlocksCaptured.Count == 0)
+            {
+                //Wait for block data to come in
+                Thread.Sleep(1);
+            }
+            RedetectBlocks();
+
+            Thread.Sleep(5000);
         }
     }
 }

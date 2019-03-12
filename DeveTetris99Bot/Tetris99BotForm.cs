@@ -12,39 +12,44 @@ namespace DeveTetris99Bot
     public partial class Tetris99BotForm : Form
     {
         private DirectShowCapturer dsc;
-        private ArduinoSerialConnector _currentSerialConnection;
+        public ArduinoSerialConnector CurrentSerialConnection { get; private set; }
         private Player tetrisPlayer;
 
         public Tetris99BotForm()
         {
             InitializeComponent();
-
-            //dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
-            //{
-            //    TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
-            //});
-
-            var dsc2 = new FakeDetector(this, pictureBox1, (bmp) =>
-            {
-                TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
-            });
-
-            ReloadComPorts();
-
-
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            var fakeGame = new FakeGame(panelSimulator, labelLinesCleared);
-            tetrisPlayer = new Player(fakeGame, fakeGame);
+            var realGame = new RealGame(this, panelSimulator, labelLinesCleared);
+            tetrisPlayer = new Player(realGame, realGame);
 
+
+
+            dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
+            {
+                var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
+                realGame.LoadCapturedGameData(nextBlocks);
+            });
+
+            //var dsc2 = new FakeDetector(this, pictureBox1, (bmp) =>
+            //{
+            //    var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
+            //    realGame.LoadCapturedGameData(nextBlocks);
+            //});
+
+            ReloadComPorts();
+
+            base.OnLoad(e);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
             Task.Run(() =>
             {
                 tetrisPlayer.Play();
             });
-
-            base.OnLoad(e);
         }
 
         private void ReloadComPorts()
@@ -64,17 +69,17 @@ namespace DeveTetris99Bot
 
         private void buttonSerialArduinoConnectDisconnect_Click(object sender, System.EventArgs e)
         {
-            if (_currentSerialConnection == null)
+            if (CurrentSerialConnection == null)
             {
                 var selectedPort = comboBoxComConnections.GetItemText(comboBoxComConnections.SelectedItem);
-                _currentSerialConnection = new ArduinoSerialConnector(selectedPort, textboxDebug);
+                CurrentSerialConnection = new ArduinoSerialConnector(selectedPort, textboxDebug);
 
                 buttonSerialArduinoConnectDisconnect.Text = "Disconnect";
             }
             else
             {
-                var toClose = _currentSerialConnection;
-                _currentSerialConnection = null;
+                var toClose = CurrentSerialConnection;
+                CurrentSerialConnection = null;
                 toClose.Close();
 
                 buttonSerialArduinoConnectDisconnect.Text = "Connect";
@@ -97,19 +102,19 @@ namespace DeveTetris99Bot
 
         private void buttonArduinoAction_Down(object sender, MouseEventArgs e)
         {
-            if (_currentSerialConnection != null)
+            if (CurrentSerialConnection != null)
             {
                 var button = (Button)sender;
-                _currentSerialConnection.SendButtonDown(button.Text.Split(' ').First());
+                CurrentSerialConnection.SendButtonDown(button.Text.Split(' ').First());
             }
         }
 
         private void buttonArduinoAction_Up(object sender, MouseEventArgs e)
         {
-            if (_currentSerialConnection != null)
+            if (CurrentSerialConnection != null)
             {
                 var button = (Button)sender;
-                _currentSerialConnection.SendButtonUp(button.Text.Split(' ').First());
+                CurrentSerialConnection.SendButtonUp(button.Text.Split(' ').First());
             }
         }
     }

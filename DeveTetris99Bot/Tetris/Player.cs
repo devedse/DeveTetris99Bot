@@ -29,6 +29,8 @@ namespace DeveTetris99Bot.Tetris
 
         public void Play()
         {
+            gameStateReader.Starting();
+
             while (true)
             {
                 var gameState = gameStateReader.ReadGameState();

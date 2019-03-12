@@ -69,6 +69,7 @@
     <Compile Include="Tetris\Board.cs" />
     <Compile Include="Tetris\ColumnAndOrientationOrStash.cs" />
     <Compile Include="Tetris\DropResult.cs" />
+    <Compile Include="Tetris\RealGame.cs" />
     <Compile Include="Tetris\FakeGame.cs" />
     <Compile Include="Tetris\GameState.cs" />
     <Compile Include="Tetris\IGameStateReader.cs" />

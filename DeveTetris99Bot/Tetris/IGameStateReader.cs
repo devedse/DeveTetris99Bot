@@ -9,5 +9,6 @@ namespace DeveTetris99Bot.Tetris
     public interface IGameStateReader
     {
         GameState ReadGameState();
+        void Starting();
     }
 }

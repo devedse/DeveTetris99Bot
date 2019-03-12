@@ -1,4 +1,5 @@
 ﻿using DeveTetris99Bot.Config;
+using DeveTetris99Bot.Tetris;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace DeveTetris99Bot.TetrisDetector
         private const int BlackColorTreshhold = 60;
         private const float LightnessTreshhold = 0.3f;
 
-        public static void ScreenRefreshed(object sender, Bitmap data, Panel panelToDrawIn, Panel panelToDrawIn2)
+        public static List<Tetrimino> ScreenRefreshed(object sender, Bitmap data, Panel panelToDrawIn, Panel panelToDrawIn2)
         {
             int dividertje = 1;
 
@@ -97,20 +98,26 @@ namespace DeveTetris99Bot.TetrisDetector
             var graphicsPanel2 = panelToDrawIn2.CreateGraphics();
             int vakjeNummer = 0;
 
-            DetectNextBlock(data, xStepEersteBlokje, yStepEersteBlokje, xStartEersteBlokje, yStartEersteBlokje, graphicsPanel2, 0);
-            //Detect eerste blokje
+            var tetriminos = new List<Tetrimino>
+            {
+                DetectNextBlock(data, xStepEersteBlokje, yStepEersteBlokje, xStartEersteBlokje, yStartEersteBlokje, graphicsPanel2, 0),
+                //Detect eerste blokje
 
-            DetectNextBlock(data, 15, 15, 823, 151, graphicsPanel2, 1);
-            DetectNextBlock(data, 15, 15, 823, 206, graphicsPanel2, 2);
-            DetectNextBlock(data, 15, 15, 823, 260, graphicsPanel2, 3);
-            DetectNextBlock(data, 15, 15, 823, 314, graphicsPanel2, 4);
-            DetectNextBlock(data, 15, 15, 823, 370, graphicsPanel2, 5);
+                DetectNextBlock(data, 15, 15, 823, 151, graphicsPanel2, 1),
+                DetectNextBlock(data, 15, 15, 823, 206, graphicsPanel2, 2),
+                DetectNextBlock(data, 15, 15, 823, 260, graphicsPanel2, 3),
+                DetectNextBlock(data, 15, 15, 823, 314, graphicsPanel2, 4),
+                DetectNextBlock(data, 15, 15, 823, 370, graphicsPanel2, 5)
+            };
 
             data.Dispose();
+            return tetriminos;
         }
 
-        private static void DetectNextBlock(Bitmap data, int stepX, int stepY, int xStart, int yStart, Graphics graphicsPanel2, int vakjeNummer)
+        private static Tetrimino DetectNextBlock(Bitmap data, int stepX, int stepY, int xStart, int yStart, Graphics graphicsPanel2, int vakjeNummer)
         {
+            bool[,] tetriminoArray = new bool[2, 4];
+
             for (int y = 0; y < 2; y++)
             {
                 for (int x = 0; x < 4; x++)
@@ -153,11 +160,32 @@ namespace DeveTetris99Bot.TetrisDetector
                     else
                     {
                         darkest = Color.Red;
+                        tetriminoArray[y, x] = true;
                     }
                     var br = new SolidBrush(darkest);
                     graphicsPanel2.FillRectangle(br, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize + vakjeNummer * (TetrisConstants.BlockSize * 3), TetrisConstants.BlockSize, TetrisConstants.BlockSize);
                 }
             }
+
+            if (tetriminoArray[1, 0] == false &&
+                tetriminoArray[1, 1] == false &&
+                tetriminoArray[1, 2] == false &&
+                tetriminoArray[1, 3] == false)
+            {
+                tetriminoArray = new bool[1, 4] { { tetriminoArray[0, 0], tetriminoArray[0, 1], tetriminoArray[0, 2], tetriminoArray[0, 3] } };
+            }
+
+            if (tetriminoArray[0, 3] == false && tetriminoArray[1, 3] == false)
+            {
+                tetriminoArray = new bool[2, 3] { { tetriminoArray[0, 0], tetriminoArray[0, 1], tetriminoArray[0, 2] }, { tetriminoArray[1, 0], tetriminoArray[1, 1], tetriminoArray[1, 2] } };
+            }
+
+            if (tetriminoArray[0, 0] == false && tetriminoArray[1, 0] == false)
+            {
+                tetriminoArray = new bool[2, 2] { { tetriminoArray[0, 1], tetriminoArray[0, 2] }, { tetriminoArray[1, 1], tetriminoArray[1, 2] } };
+            }
+
+            return new Tetrimino(tetriminoArray);
         }
     }
 }
