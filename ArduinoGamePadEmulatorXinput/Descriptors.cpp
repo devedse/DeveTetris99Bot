@@ -212,41 +212,7 @@ const uint8_t PROGMEM ConfigurationDescriptor[] =
  *  the string descriptor with index 0 (the first index). It is actually an array of 16-bit integers, which indicate
  *  via the language ID table available at USB.org what languages the device supports for its string descriptors.
  */
-const USB_Descriptor_String_t PROGMEM LanguageString =
-{
-	.Header                 = {.Size = USB_STRING_LEN(1), .Type = DTYPE_String},
 
-	.UnicodeString          = {LANGUAGE_ID_ENG}
-};
-
-/** Manufacturer descriptor string. This is a Unicode string containing the manufacturer's details in human readable
- *  form, and is read out upon request by the host when the appropriate string ID is requested, listed in the Device
- *  Descriptor.
- */
-const USB_Descriptor_String_t PROGMEM ManufacturerString =
-{
-	.Header                 = {.Size = USB_STRING_LEN(12), .Type = DTYPE_String},
-
-	.UnicodeString          = L"kadevice.net"
-};
-
-/** Product descriptor string. This is a Unicode string containing the product's details in human readable form,
- *  and is read out upon request by the host when the appropriate string ID is requested, listed in the Device
- *  Descriptor.
- */
-const USB_Descriptor_String_t PROGMEM ProductString =
-{
-	.Header                 = {.Size = USB_STRING_LEN(31), .Type = DTYPE_String},
-
-	.UnicodeString          = L"KADE - Kick Ass Dynamic Encoder"
-};
-
-const USB_Descriptor_String_t PROGMEM VersionString =
-{
-	.Header                 = {.Size = USB_STRING_LEN(3), .Type = DTYPE_String},
-
-	.UnicodeString          = L"1.0"
-};
 /** This function is called by the library when in device mode, and must be overridden (see library "USB Descriptors"
  *  documentation) by the application code so that the address and size of a requested descriptor can be given
  *  to the USB library. When the device receives a Get Descriptor request on the control endpoint, this function
@@ -277,20 +243,20 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue,
 			switch (DescriptorNumber)
 			{
 				case 0x00:
-					Address = &LanguageString;
-					Size    = pgm_read_byte(&LanguageString.Header.Size);
+					//Address = &LanguageString;
+					//Size    = pgm_read_byte(&LanguageString.Header.Size);
 					break;
 				case 0x01:
-					Address = &ManufacturerString;
-					Size    = pgm_read_byte(&ManufacturerString.Header.Size);
+					//Address = &ManufacturerString;
+					//Size    = pgm_read_byte(&ManufacturerString.Header.Size);
 					break;
 				case 0x02:
-					Address = &ProductString;
-					Size    = pgm_read_byte(&ProductString.Header.Size);
+					//Address = &ProductString;
+					//Size    = pgm_read_byte(&ProductString.Header.Size);
 					break;
 				case 0x03:
-					Address = &VersionString;
-					Size    = pgm_read_byte(&VersionString.Header.Size);
+					//Address = &VersionString;
+					//Size    = pgm_read_byte(&VersionString.Header.Size);
 					break;
 		}
 
