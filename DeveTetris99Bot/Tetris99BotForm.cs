@@ -26,6 +26,30 @@ namespace DeveTetris99Bot
             tetrisPlayer = new Player(realGame, realGame);
 
 
+            for (int i = 0; i < Tetrimino.All.Length; i++)
+            {
+                var beest = Tetrimino.All[i];
+                Console.WriteLine($"{i}:");
+                Console.WriteLine(beest.ToString());
+
+                var result = beest.RotateCW();
+                Console.WriteLine(result.ToString());
+
+                var result2 = result.RotateCW();
+                Console.WriteLine(result2.ToString());
+
+                var result3 = result2.RotateCW();
+                Console.WriteLine(result3.ToString());
+
+                var result4 = result3.RotateCW();
+                Console.WriteLine(result4.ToString());
+
+                if (!beest.Equals(result4))
+                {
+                    throw new Exception("Error");
+                }
+            }
+
 
             dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
             {

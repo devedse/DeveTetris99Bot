@@ -130,6 +130,28 @@ namespace DeveTetris99Bot.Tetris
             return sb.ToString();
         }
 
+        public string ToStringRotateable()
+        {
+            var sb = new StringBuilder();
+
+            for (int y = 0; y < RotateableArray.GetLength(0); y++)
+            {
+                for (int x = 0; x < RotateableArray.GetLength(1); x++)
+                {
+                    if (RotateableArray[y, x])
+                    {
+                        sb.Append('x');
+                    }
+                    else
+                    {
+                        sb.Append('.');
+                    }
+                }
+                sb.AppendLine();
+            }
+            return sb.ToString();
+        }
+
         public override bool Equals(object obj)
         {
             if (this == obj)

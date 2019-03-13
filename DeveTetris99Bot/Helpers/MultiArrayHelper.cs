@@ -50,7 +50,7 @@ namespace DeveTetris99Bot.Helpers
 
         public static bool AllInRowFalse(bool[,] array, int row)
         {
-            for (int i = 0; i < array.GetLength(0); i++)
+            for (int i = 0; i < array.GetLength(1); i++)
             {
                 if (array[row, i] == true)
                 {
