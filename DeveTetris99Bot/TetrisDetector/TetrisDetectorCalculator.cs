@@ -13,7 +13,7 @@ namespace DeveTetris99Bot.TetrisDetector
         private const int BlackColorTreshhold = 60;
         private const float LightnessTreshhold = 0.3f;
 
-        public static List<Tetrimino> ScreenRefreshed(object sender, Bitmap data, Panel panelToDrawIn, Panel panelToDrawIn2)
+        public static TetrisDetectionData ScreenRefreshed(object sender, Bitmap data, Panel panelToDrawIn, Panel panelToDrawIn2)
         {
             int dividertje = 1;
 
@@ -112,7 +112,12 @@ namespace DeveTetris99Bot.TetrisDetector
             };
 
             data.Dispose();
-            return tetriminos;
+
+            var detectionData = new TetrisDetectionData()
+            {
+                TheNewIncomingTetriminos = tetriminos
+            };
+            return detectionData;
         }
 
         private static Tetrimino DetectNextBlock(Bitmap data, int stepX, int stepY, int xStart, int yStart, Graphics graphicsPanel2, int vakjeNummer)
@@ -219,7 +224,7 @@ namespace DeveTetris99Bot.TetrisDetector
             }
         }
 
-      
+
 
         //private static bool[,] RemoveColumn(bool[,] originalArray, int columnToRemove)
         //{

@@ -1,4 +1,5 @@
 ﻿using DeveTetris99Bot.Config;
+using DeveTetris99Bot.TetrisDetector;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -43,11 +44,11 @@ namespace DeveTetris99Bot.Tetris
         private List<Tetrimino> _lastDetectedBlocks = new List<Tetrimino>();
         private int _lastDetectedBlocksAreTheSameTimes = 0;
 
-        public void LoadCapturedGameData(List<Tetrimino> theNewIncomingTetriminos)
+        public void LoadCapturedGameData(TetrisDetectionData detectionData)
         {
             if (running)
             {
-                foreach (var item in theNewIncomingTetriminos)
+                foreach (var item in detectionData.TheNewIncomingTetriminos)
                 {
                     if (!Tetrimino.All.Any(z => z.Equals(item)))
                     {
@@ -56,18 +57,18 @@ namespace DeveTetris99Bot.Tetris
                     }
                 }
 
-                if (theNewIncomingTetriminos.Count != _lastDetectedBlocks.Count)
+                if (detectionData.TheNewIncomingTetriminos.Count != _lastDetectedBlocks.Count)
                 {
-                    _lastDetectedBlocks = theNewIncomingTetriminos;
+                    _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
                     _lastDetectedBlocksAreTheSameTimes = 0;
                     return;
                 }
 
-                for (int i = 0; i < theNewIncomingTetriminos.Count; i++)
+                for (int i = 0; i < detectionData.TheNewIncomingTetriminos.Count; i++)
                 {
-                    if (!theNewIncomingTetriminos[i].Equals(_lastDetectedBlocks[i]))
+                    if (!detectionData.TheNewIncomingTetriminos[i].Equals(_lastDetectedBlocks[i]))
                     {
-                        _lastDetectedBlocks = theNewIncomingTetriminos;
+                        _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
                         _lastDetectedBlocksAreTheSameTimes = 0;
                         return;
                     }
@@ -90,8 +91,8 @@ namespace DeveTetris99Bot.Tetris
                 {
                     if (nextBlocksCaptured.Count == cur)
                     {
-                        nextBlocksCaptured.AddRange(theNewIncomingTetriminos);
-                        foreach (var block in theNewIncomingTetriminos)
+                        nextBlocksCaptured.AddRange(detectionData.TheNewIncomingTetriminos);
+                        foreach (var block in detectionData.TheNewIncomingTetriminos)
                         {
                             Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
                         }
@@ -99,14 +100,14 @@ namespace DeveTetris99Bot.Tetris
                     else
                     {
                         int lastInExisting = nextBlocksCaptured.Count - 1;
-                        int lastInNew = theNewIncomingTetriminos.Count - 1;
+                        int lastInNew = detectionData.TheNewIncomingTetriminos.Count - 1;
 
                         int deducter = nextBlocksCaptured.Count;
 
                         while (lastInNew >= 0)
                         {
                             var blockInExisting = nextBlocksCaptured[lastInExisting];
-                            var blockInNew = theNewIncomingTetriminos[lastInNew];
+                            var blockInNew = detectionData.TheNewIncomingTetriminos[lastInNew];
 
                             if (!blockInExisting.Equals(blockInNew))
                             {
@@ -122,7 +123,7 @@ namespace DeveTetris99Bot.Tetris
                         }
 
 
-                        var toAdd = theNewIncomingTetriminos.Skip(deducter).ToList();
+                        var toAdd = detectionData.TheNewIncomingTetriminos.Skip(deducter).ToList();
 
                         foreach (var block in toAdd)
                         {

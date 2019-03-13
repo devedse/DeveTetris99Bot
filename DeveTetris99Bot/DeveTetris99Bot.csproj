@@ -55,6 +55,7 @@
     <Compile Include="Capture\DirectShowLib.cs" />
     <Compile Include="Capture\FakeDetector.cs" />
     <Compile Include="Capture\MyStreamWriter.cs" />
+    <Compile Include="TetrisDetector\TetrisDetectionData.cs" />
     <Compile Include="Config\TetrisConstants.cs" />
     <Compile Include="Helpers\IEnumerableExtensions.cs" />
     <Compile Include="Helpers\MultiArrayHelper.cs" />
