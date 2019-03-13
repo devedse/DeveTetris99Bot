@@ -21,7 +21,7 @@ namespace DeveTetris99Bot
 
         protected override void OnLoad(EventArgs e)
         {
-            var realGame = new RealGame(this, panelSimulator, panelSimulatorBlocks, labelLinesCleared);
+            var realGame = new RealGame(this, panelSimulator, panelSimulatorBlocks, panelDanger, labelLinesCleared);
             tetrisPlayer = new Player(realGame, realGame);
 
 
@@ -60,7 +60,7 @@ namespace DeveTetris99Bot
             }
             else
             {
-                var dsc2 = new FakeDetector(this, pictureBox1, (bmp) =>
+                var dsc2 = new FakeDetector("testimage.png", this, pictureBox1, (bmp) =>
                 {
                     var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
                     realGame.LoadCapturedGameData(nextBlocks);

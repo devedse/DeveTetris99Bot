@@ -97,7 +97,7 @@ namespace DeveTetris99Bot.Capture
                     {
                         var ss = Screenshot(pictureBox);
 
-                        //ss.Save("outputje.png", ImageFormat.Png);
+                        ss.Save("outputje.png", ImageFormat.Png);
 
                         try
                         {

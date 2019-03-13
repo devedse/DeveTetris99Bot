@@ -11,14 +11,14 @@ namespace DeveTetris99Bot.Capture
         private readonly PictureBox pictureBox;
         private readonly Action<Bitmap> imageDetected;
 
-        public FakeDetector(Tetris99BotForm form, PictureBox pictureBox, Action<Bitmap> imageDetected)
+        public FakeDetector(string testImageName, Tetris99BotForm form, PictureBox pictureBox, Action<Bitmap> imageDetected)
         {
             this.form = form;
             this.pictureBox = pictureBox;
             this.imageDetected = imageDetected;
 
 
-            var bmptje = new Bitmap("testimage.png");
+            var bmptje = new Bitmap(testImageName);
 
             pictureBox.Image = bmptje;
 
@@ -27,7 +27,7 @@ namespace DeveTetris99Bot.Capture
                 Task.Delay(1000).Wait();
                 while (true)
                 {
-                    var ss = new Bitmap("testimage.png");                    
+                    var ss = new Bitmap(testImageName);                    
 
                     try
                     {

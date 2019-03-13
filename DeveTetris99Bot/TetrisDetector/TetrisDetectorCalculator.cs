@@ -1,6 +1,7 @@
 ﻿using DeveTetris99Bot.Config;
 using DeveTetris99Bot.Helpers;
 using DeveTetris99Bot.Tetris;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -97,7 +98,6 @@ namespace DeveTetris99Bot.TetrisDetector
             int yStartEersteBlokje = 90;
 
             var graphicsPanel2 = panelToDrawIn2.CreateGraphics();
-            int vakjeNummer = 0;
 
             var tetriminos = new List<Tetrimino>
             {
@@ -111,13 +111,52 @@ namespace DeveTetris99Bot.TetrisDetector
                 DetectNextBlock(data, 15, 15, 823, 370, graphicsPanel2, 5)
             };
 
-            data.Dispose();
-
             var detectionData = new TetrisDetectionData()
             {
+                Danger = DetectDanger(data),
                 TheNewIncomingTetriminos = tetriminos
             };
+
+            data.Dispose();
             return detectionData;
+        }
+
+        private static bool DetectDanger(Bitmap data)
+        {
+            int pixelX = 451;
+            int pixelY = 664;
+            int blockWidth = 32;
+            int dingetje = blockWidth / 4;
+
+            var pixels = new List<Color>
+            {
+                data.GetPixel(pixelX, pixelY),
+                data.GetPixel(pixelX - dingetje, pixelY - dingetje),
+                data.GetPixel(pixelX + dingetje, pixelY - dingetje),
+                data.GetPixel(pixelX - dingetje, pixelY + dingetje),
+                data.GetPixel(pixelX + dingetje, pixelY + dingetje)
+            };
+
+            var avgHue = pixels.Average(t => t.GetHue());
+            var avgLightness = pixels.Average(t => Math.Max(Math.Max(t.R, t.G), t.B));
+
+
+            var l1 = pixels[0].GetBrightness();
+            var l2 = pixels[1].GetBrightness();
+            var l3 = pixels[2].GetBrightness();
+            var l4 = pixels[3].GetBrightness();
+            var l5 = pixels[4].GetBrightness();
+            
+
+
+            if (avgLightness > 190)
+            {
+                if (avgHue > 340 && avgHue < 358f)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static Tetrimino DetectNextBlock(Bitmap data, int stepX, int stepY, int xStart, int yStart, Graphics graphicsPanel2, int vakjeNummer)

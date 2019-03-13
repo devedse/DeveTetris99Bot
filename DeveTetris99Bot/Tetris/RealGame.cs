@@ -21,33 +21,42 @@ namespace DeveTetris99Bot.Tetris
         private readonly Tetris99BotForm tetris99Form;
         private readonly Panel drawPanel;
         private readonly Panel drawPanelBlocks;
+        private readonly Panel panelDanger;
         private readonly Label linesClearedLabel;
         private Graphics g;
         private Graphics gBlocks;
-
+        private Graphics gDanger;
         private int linesCleared = 0;
 
         private bool running = false;
 
-        public RealGame(Tetris99BotForm tetris99Form, Panel drawPanel, Panel drawPanelBlocks, Label linesClearedLabel)
+        public RealGame(Tetris99BotForm tetris99Form, Panel drawPanel, Panel drawPanelBlocks, Panel drawPanelDanger, Label linesClearedLabel)
         {
             board = new Board(TetrisConstants.BoardWidth, TetrisConstants.BoardHeight);
 
             this.tetris99Form = tetris99Form;
             this.drawPanel = drawPanel;
             this.drawPanelBlocks = drawPanelBlocks;
+            panelDanger = drawPanelDanger;
             this.linesClearedLabel = linesClearedLabel;
             g = drawPanel.CreateGraphics();
             gBlocks = drawPanelBlocks.CreateGraphics();
+            gDanger = drawPanelDanger.CreateGraphics();
         }
 
         private List<Tetrimino> _lastDetectedBlocks = new List<Tetrimino>();
         private int _lastDetectedBlocksAreTheSameTimes = 0;
+        private DateTime _lastDanger = DateTime.MinValue;
 
         public void LoadCapturedGameData(TetrisDetectionData detectionData)
         {
             if (running)
             {
+                if (detectionData.Danger)
+                {
+                    _lastDanger = DateTime.Now;
+                }
+
                 foreach (var item in detectionData.TheNewIncomingTetriminos)
                 {
                     if (!Tetrimino.All.Any(z => z.Equals(item)))
@@ -353,17 +362,37 @@ namespace DeveTetris99Bot.Tetris
                 DrawCurrentBlock();
                 DrawNextBlocks();
 
+                double dangerTimer = 2;
+                var timeSinceLastDanger = DateTime.Now - _lastDanger;
+                bool thereWasDanger = timeSinceLastDanger.TotalSeconds < dangerTimer;
+
+                if (thereWasDanger)
+                {
+                    gDanger.Clear(Color.Red);
+                }
+                else
+                {
+                    gDanger.Clear(Color.Green);
+                }
+
                 if (!string.IsNullOrWhiteSpace(keyToPress))
                 {
                     tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress);
                     if (keyToPress == "UH")
                     {
                         //If other players spawn shit, we need to wait for the animation
-                        Thread.Sleep(300);
+                        if (thereWasDanger)
+                        {
+                            Thread.Sleep(2000);
+                        }
+                        else
+                        {
+                            Thread.Sleep(100);
+                        }
                     }
                     if (linesClearedNow > 0)
                     {
-                        Thread.Sleep(500);
+                        Thread.Sleep(800);
                     }
                 }
             }
