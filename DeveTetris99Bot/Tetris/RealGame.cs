@@ -98,6 +98,8 @@ namespace DeveTetris99Bot.Tetris
 
         public void DrawCurrentBlock()
         {
+            Console.WriteLine($"Drawing cur block: {curBlockWithPos.LeftCol} {curBlockWithPos.Tetrimino}");
+
             for (int y = 0; y < curBlockWithPos.Tetrimino.Height; y++)
             {
                 for (int x = 0; x < curBlockWithPos.Tetrimino.Width; x++)
@@ -113,6 +115,8 @@ namespace DeveTetris99Bot.Tetris
 
         public void RedrawComplete()
         {
+            Console.WriteLine("Redraw");
+
             g.Clear(Color.Black);
             for (int y = 0; y < board.Height; y++)
             {
@@ -156,7 +160,7 @@ namespace DeveTetris99Bot.Tetris
                 var viableBlocks = nextBlocksCaptured.Skip(cur).Take(6).ToList();
 
                 var theNewBlock = viableBlocks.First();
-                curBlockWithPos = new TetriminoWithPosition(theNewBlock, 0, 3 + (theNewBlock.Width == 2 ? 1 : 0));
+                curBlockWithPos = new TetriminoWithPosition(theNewBlock, 2, 3 + (theNewBlock.Width == 2 ? 1 : 0));
                 nextBlocks = viableBlocks.Skip(1).ToList();
             }
         }
@@ -175,16 +179,20 @@ namespace DeveTetris99Bot.Tetris
 
         public void MakeMove(List<Move> moves)
         {
-            foreach (var move in moves)
+            foreach (var move in moves.Take(1))
             {
+                string keyToPress = null;
+
                 switch (move)
                 {
                     case Move.Left:
-                        tetris99Form.CurrentSerialConnection.SendButtonPress("LH");
+                        //tetris99Form.CurrentSerialConnection.SendButtonPress("LH");
+                        keyToPress = "LH";
                         curBlockWithPos.LeftCol--;
                         break;
                     case Move.Right:
-                        tetris99Form.CurrentSerialConnection.SendButtonPress("RH");
+                        //tetris99Form.CurrentSerialConnection.SendButtonPress("RH");
+                        keyToPress = "RH";
                         curBlockWithPos.LeftCol++;
                         break;
                     case Move.Drop:
@@ -201,49 +209,53 @@ namespace DeveTetris99Bot.Tetris
 
                         if (result.LinesCleared != 0)
                         {
-                            RedrawComplete();
+                            //RedrawComplete();
                             //DrawDifferences(result.Board, previousBord);
 
 
                         }
                         else
                         {
-                            RedrawComplete();
+                            //RedrawComplete();
                             //DrawDifferences(result.Board, previousBord);
 
                         }
 
-                        tetris99Form.CurrentSerialConnection.SendButtonPress("UH");
+                        keyToPress = "UH";
+                        //tetris99Form.CurrentSerialConnection.SendButtonPress("UH");
 
                         cur++;
                         RedetectBlocks();
 
-                        DrawCurrentBlock();
+                        //DrawCurrentBlock();
 
 
-                        Thread.Sleep(500);
+                        //Thread.Sleep(500);
                         break;
                     case Move.Stash:
                         var tmp = inStash;
                         inStash = curBlockWithPos.Tetrimino;
-                        tetris99Form.CurrentSerialConnection.SendButtonPress("7");
+                        keyToPress = "7";
+                        //tetris99Form.CurrentSerialConnection.SendButtonPress("7");
                         if (tmp == null)
                         {
                             cur++;
                             RedetectBlocks();
-                            Thread.Sleep(500);
+                            //Thread.Sleep(500);
                         }
                         else
                         {
-                            curBlockWithPos = new TetriminoWithPosition(tmp, 0, 3 + (tmp.Width == 2 ? 1 : 0));
+                            curBlockWithPos = new TetriminoWithPosition(tmp, 2, 3 + (tmp.Width == 2 ? 1 : 0));
                         }
                         break;
                     case Move.Rotate_CW:
-                        tetris99Form.CurrentSerialConnection.SendButtonPress("2");
+                        keyToPress = "2";
+                        //tetris99Form.CurrentSerialConnection.SendButtonPress("2");
                         Rotate();
                         break;
                     case Move.Rotate_CWW:
-                        tetris99Form.CurrentSerialConnection.SendButtonPress("1");
+                        keyToPress = "1";
+                        //tetris99Form.CurrentSerialConnection.SendButtonPress("1");
                         Rotate();
                         break;
                     case Move.Enter:
@@ -251,10 +263,17 @@ namespace DeveTetris99Bot.Tetris
                     default:
                         break;
                 }
-            }
 
-            RedrawComplete();
-            DrawCurrentBlock();
+
+
+                RedrawComplete();
+                DrawCurrentBlock();
+
+                if (!string.IsNullOrWhiteSpace(keyToPress))
+                {
+                    tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress);
+                }
+            }
         }
 
         public void Rotate()
