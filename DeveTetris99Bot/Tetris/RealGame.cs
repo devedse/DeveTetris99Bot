@@ -55,46 +55,79 @@ namespace DeveTetris99Bot.Tetris
 
                 lock (nextBlocksCaptured)
                 {
-                    if (nextBlocksCaptured == null)
+                    if (nextBlocksCaptured.Count == cur)
                     {
                         nextBlocksCaptured.AddRange(theNewIncomingTetriminos);
                     }
                     else
                     {
-                        int aCount = cur;
-                        int newCount = 0;
+                        int lastInExisting = nextBlocksCaptured.Count - 1;
+                        int lastInNew = theNewIncomingTetriminos.Count - 1;
 
-                        int brrr = cur;
+                        int deducter = nextBlocksCaptured.Count;
 
-                        while (newCount < theNewIncomingTetriminos.Count)
+                        while (lastInNew >= 0)
                         {
+                            var blockInExisting = nextBlocksCaptured[lastInExisting];
+                            var blockInNew = theNewIncomingTetriminos[lastInNew];
 
-
-                            if (aCount >= nextBlocksCaptured.Count)
+                            if (!blockInExisting.Equals(blockInNew))
                             {
-                                var toAdd = theNewIncomingTetriminos.Skip(newCount).ToList();
-                                foreach (var block in toAdd)
-                                {
-                                    Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
-                                }
-                                nextBlocksCaptured.AddRange(toAdd);
-                                return;
+                                deducter = lastInNew;
+                                //reset the existing counter
+                                lastInExisting = nextBlocksCaptured.Count - 1;
                             }
                             else
                             {
-                                if (theNewIncomingTetriminos[newCount].Equals(nextBlocksCaptured[aCount]))
-                                {
-                                    aCount++;
-                                    newCount++;
-                                }
-                                else
-                                {
-                                    newCount = 0;
-                                    brrr++;
-                                    aCount = brrr;
-                                }
+                                lastInExisting--;
                             }
+                            lastInNew--;
                         }
+
+
+                        var toAdd = theNewIncomingTetriminos.Skip(deducter).ToList();
+
+                        foreach (var block in toAdd)
+                        {
+                            Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
+                        }
+                        nextBlocksCaptured.AddRange(toAdd);
+
+
+                        //int aCount = cur;
+                        //int newCount = 0;
+
+                        //int brrr = cur;
+
+                        //while (newCount < theNewIncomingTetriminos.Count)
+                        //{
+
+
+                        //    if (aCount >= nextBlocksCaptured.Count)
+                        //    {
+                        //        var toAdd = theNewIncomingTetriminos.Skip(newCount).ToList();
+                        //        foreach (var block in toAdd)
+                        //        {
+                        //            Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
+                        //        }
+                        //        nextBlocksCaptured.AddRange(toAdd);
+                        //        return;
+                        //    }
+                        //    else
+                        //    {
+                        //        if (theNewIncomingTetriminos[newCount].Equals(nextBlocksCaptured[aCount]))
+                        //        {
+                        //            aCount++;
+                        //            newCount++;
+                        //        }
+                        //        else
+                        //        {
+                        //            newCount = 0;
+                        //            brrr++;
+                        //            aCount = brrr;
+                        //        }
+                        //    }
+                        //}
                     }
                 }
             }
@@ -192,6 +225,13 @@ namespace DeveTetris99Bot.Tetris
 
         private void RedetectBlocks()
         {
+            while (nextBlocksCaptured.Count == cur)
+            {
+                Console.WriteLine("Waiting for new blocks, should only happen in fake game mode");
+                //wait for new blocks
+                Thread.Sleep(500);
+            }
+
             lock (nextBlocksCaptured)
             {
                 var viableBlocks = nextBlocksCaptured.Skip(cur).Take(6).ToList();
@@ -320,7 +360,7 @@ namespace DeveTetris99Bot.Tetris
             curBlockWithPos.Tetrimino = curBlockWithPos.Tetrimino.RotateCW();
             var after = curBlockWithPos.Tetrimino.DeductedLeftRows;
 
-            Console.WriteLine($"Moving block {preToTheLeft - after}");
+            //Console.WriteLine($"Moving block {preToTheLeft - after}");
             curBlockWithPos.LeftCol -= preToTheLeft - after;
 
             curBlockWithPos.LeftCol = Math.Max(0, curBlockWithPos.LeftCol);

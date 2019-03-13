@@ -95,10 +95,10 @@ namespace DeveTetris99Bot.Tetris
                     }
                 }
 
-                foreach (var move in moves)
-                {
-                    Console.WriteLine($"Making move: {move}");
-                }
+                //foreach (var move in moves)
+                //{
+                //    Console.WriteLine($"Making move: {move}");
+                //}
                 keyPresser.MakeMove(moves);
 
                 //Console.WriteLine(target);
