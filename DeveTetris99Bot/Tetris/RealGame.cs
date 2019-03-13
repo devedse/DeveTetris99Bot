@@ -19,21 +19,25 @@ namespace DeveTetris99Bot.Tetris
         private Tetrimino inStash;
         private readonly Tetris99BotForm tetris99Form;
         private readonly Panel drawPanel;
+        private readonly Panel drawPanelBlocks;
         private readonly Label linesClearedLabel;
         private Graphics g;
+        private Graphics gBlocks;
 
         private int linesCleared = 0;
 
         private bool running = false;
 
-        public RealGame(Tetris99BotForm tetris99Form, Panel drawPanel, Label linesClearedLabel)
+        public RealGame(Tetris99BotForm tetris99Form, Panel drawPanel, Panel drawPanelBlocks, Label linesClearedLabel)
         {
             board = new Board(TetrisConstants.BoardWidth, TetrisConstants.BoardHeight);
 
             this.tetris99Form = tetris99Form;
             this.drawPanel = drawPanel;
+            this.drawPanelBlocks = drawPanelBlocks;
             this.linesClearedLabel = linesClearedLabel;
             g = drawPanel.CreateGraphics();
+            gBlocks = drawPanelBlocks.CreateGraphics();
         }
 
         public void LoadCapturedGameData(List<Tetrimino> theNewIncomingTetriminos)
@@ -71,7 +75,7 @@ namespace DeveTetris99Bot.Tetris
                                 var toAdd = theNewIncomingTetriminos.Skip(newCount).ToList();
                                 foreach (var block in toAdd)
                                 {
-                                    Console.WriteLine($"Adding block: {block}");
+                                    Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
                                 }
                                 nextBlocksCaptured.AddRange(toAdd);
                                 return;
@@ -96,9 +100,44 @@ namespace DeveTetris99Bot.Tetris
             }
         }
 
+        public void DrawNextBlocks()
+        {
+            List<Tetrimino> copy;
+            lock (nextBlocks)
+            {
+                copy = nextBlocks.ToList();
+            }
+
+
+            int pos = 0;
+            //int ccc = cur;
+
+            gBlocks.Clear(Color.Black);
+            while (pos < copy.Count)
+            {
+                var curBlock = copy[pos];
+
+                for (int y = 0; y < curBlock.Height; y++)
+                {
+                    for (int x = 0; x < curBlock.Width; x++)
+                    {
+                        if (curBlock.TetriminoArray[y, x])
+                        {
+                            gBlocks.FillRectangle(Brushes.Red, x * TetrisConstants.BlockSize, y * TetrisConstants.BlockSize + pos * (TetrisConstants.BlockSize * 3), TetrisConstants.BlockSize, TetrisConstants.BlockSize);
+                        }
+                    }
+                }
+
+                pos++;
+                //ccc++;
+            }
+
+
+        }
+
         public void DrawCurrentBlock()
         {
-            Console.WriteLine($"Drawing cur block: {curBlockWithPos.LeftCol} {curBlockWithPos.Tetrimino}");
+            //Console.WriteLine($"Drawing cur block: {curBlockWithPos.LeftCol} {curBlockWithPos.Tetrimino}");
 
             for (int y = 0; y < curBlockWithPos.Tetrimino.Height; y++)
             {
@@ -115,8 +154,6 @@ namespace DeveTetris99Bot.Tetris
 
         public void RedrawComplete()
         {
-            Console.WriteLine("Redraw");
-
             g.Clear(Color.Black);
             for (int y = 0; y < board.Height; y++)
             {
@@ -268,6 +305,7 @@ namespace DeveTetris99Bot.Tetris
 
                 RedrawComplete();
                 DrawCurrentBlock();
+                DrawNextBlocks();
 
                 if (!string.IsNullOrWhiteSpace(keyToPress))
                 {

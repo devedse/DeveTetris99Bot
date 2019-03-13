@@ -51,6 +51,7 @@
             this.textboxDebug = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.panelSimulatorBlocks = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -65,16 +66,16 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(1360, 12);
+            this.panel1.Location = new System.Drawing.Point(1300, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 400);
             this.panel1.TabIndex = 1;
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(1588, 12);
+            this.panel2.Location = new System.Drawing.Point(1506, 12);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 400);
+            this.panel2.Size = new System.Drawing.Size(80, 400);
             this.panel2.TabIndex = 2;
             // 
             // groupBox1
@@ -185,7 +186,7 @@
             // 
             // panelSimulator
             // 
-            this.panelSimulator.Location = new System.Drawing.Point(1876, 12);
+            this.panelSimulator.Location = new System.Drawing.Point(1616, 12);
             this.panelSimulator.Name = "panelSimulator";
             this.panelSimulator.Size = new System.Drawing.Size(200, 400);
             this.panelSimulator.TabIndex = 2;
@@ -299,11 +300,19 @@
             this.button5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
             this.button5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
+            // panelSimulatorBlocks
+            // 
+            this.panelSimulatorBlocks.Location = new System.Drawing.Point(1822, 12);
+            this.panelSimulatorBlocks.Name = "panelSimulatorBlocks";
+            this.panelSimulatorBlocks.Size = new System.Drawing.Size(80, 400);
+            this.panelSimulatorBlocks.TabIndex = 3;
+            // 
             // Tetris99BotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2103, 739);
+            this.ClientSize = new System.Drawing.Size(2084, 739);
+            this.Controls.Add(this.panelSimulatorBlocks);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textboxDebug);
@@ -358,6 +367,7 @@
         private System.Windows.Forms.TextBox textboxDebug;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Panel panelSimulatorBlocks;
     }
 }
 
