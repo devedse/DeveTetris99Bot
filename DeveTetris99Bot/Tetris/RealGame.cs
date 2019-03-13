@@ -422,7 +422,16 @@ namespace DeveTetris99Bot.Tetris
             }
             RedetectBlocks();
 
+            //Sometimes if you don't do this it sends random inputs.
+            tetris99Form.CurrentSerialConnection.SendButtonPress("LH");
+            tetris99Form.CurrentSerialConnection.SendButtonPress("UH");
+            tetris99Form.CurrentSerialConnection.SendButtonPress("RH");
+            tetris99Form.CurrentSerialConnection.SendButtonPress("DH");
+
             Thread.Sleep(5000);
+
+            //Select Aanvallers
+            tetris99Form.CurrentSerialConnection.SendButtonPress("DR");
         }
     }
 }

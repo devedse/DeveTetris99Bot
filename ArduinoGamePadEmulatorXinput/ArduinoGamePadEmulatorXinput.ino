@@ -77,6 +77,30 @@ void loop() {
       } else {
         pad_left_analog_y = 0x7F;
       }
+    } else if (button == "LR") {
+      if (valueButtonBool) {
+        pad_right_analog_x = 0x00;
+      } else {
+        pad_right_analog_x = 0x7F;
+      }
+    } else if (button == "RR") {
+      if (valueButtonBool) {
+        pad_right_analog_x = 0xFF;
+      } else {
+        pad_right_analog_x = 0x7F;
+      }
+    } else if (button == "UR") {
+      if (valueButtonBool) {
+        pad_right_analog_y = 0x00;
+      } else {
+        pad_right_analog_y = 0x7F;
+      }
+    } else if (button == "DR") {
+      if (valueButtonBool) {
+        pad_right_analog_y = 0xFF;
+      } else {
+        pad_right_analog_y = 0x7F;
+      }
     } else if (button == "LH") {
       pad_left = valueButtonBool;
     } else if (button == "RH") {

@@ -54,6 +54,10 @@
             this.panelSimulatorBlocks = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.panelDanger = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.buttonUR = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -225,7 +229,7 @@
             // 
             // buttonDH
             // 
-            this.buttonDH.Location = new System.Drawing.Point(1600, 650);
+            this.buttonDH.Location = new System.Drawing.Point(1400, 825);
             this.buttonDH.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDH.Name = "buttonDH";
             this.buttonDH.Size = new System.Drawing.Size(50, 50);
@@ -237,7 +241,7 @@
             // 
             // buttonRH
             // 
-            this.buttonRH.Location = new System.Drawing.Point(1650, 600);
+            this.buttonRH.Location = new System.Drawing.Point(1450, 775);
             this.buttonRH.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRH.Name = "buttonRH";
             this.buttonRH.Size = new System.Drawing.Size(50, 50);
@@ -249,7 +253,7 @@
             // 
             // buttonUH
             // 
-            this.buttonUH.Location = new System.Drawing.Point(1600, 550);
+            this.buttonUH.Location = new System.Drawing.Point(1400, 725);
             this.buttonUH.Margin = new System.Windows.Forms.Padding(2);
             this.buttonUH.Name = "buttonUH";
             this.buttonUH.Size = new System.Drawing.Size(50, 50);
@@ -261,7 +265,7 @@
             // 
             // buttonLH
             // 
-            this.buttonLH.Location = new System.Drawing.Point(1550, 600);
+            this.buttonLH.Location = new System.Drawing.Point(1350, 775);
             this.buttonLH.Margin = new System.Windows.Forms.Padding(2);
             this.buttonLH.Name = "buttonLH";
             this.buttonLH.Size = new System.Drawing.Size(50, 50);
@@ -325,11 +329,63 @@
             this.panelDanger.Size = new System.Drawing.Size(80, 80);
             this.panelDanger.TabIndex = 20;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1575, 650);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(50, 50);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "DR";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.button2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(1625, 600);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(50, 50);
+            this.button3.TabIndex = 23;
+            this.button3.Text = "RR";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.button3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
+            // 
+            // buttonUR
+            // 
+            this.buttonUR.Location = new System.Drawing.Point(1575, 550);
+            this.buttonUR.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonUR.Name = "buttonUR";
+            this.buttonUR.Size = new System.Drawing.Size(50, 50);
+            this.buttonUR.TabIndex = 22;
+            this.buttonUR.Text = "UR";
+            this.buttonUR.UseVisualStyleBackColor = true;
+            this.buttonUR.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.buttonUR.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(1525, 600);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(50, 50);
+            this.button6.TabIndex = 21;
+            this.button6.Text = "LR";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
+            this.button6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
+            // 
             // Tetris99BotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2084, 739);
+            this.ClientSize = new System.Drawing.Size(2084, 891);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.buttonUR);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.panelDanger);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panelSimulatorBlocks);
@@ -390,6 +446,10 @@
         private System.Windows.Forms.Panel panelSimulatorBlocks;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panelDanger;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonUR;
+        private System.Windows.Forms.Button button6;
     }
 }
 
