@@ -383,11 +383,11 @@ namespace DeveTetris99Bot.Tetris
                         //If other players spawn shit, we need to wait for the animation
                         if (thereWasDanger)
                         {
-                            Thread.Sleep(2000);
+                            Thread.Sleep(1000);
                         }
                         else
                         {
-                            Thread.Sleep(100);
+                            Thread.Sleep(80);
                         }
                     }
                     if (linesClearedNow > 0)
