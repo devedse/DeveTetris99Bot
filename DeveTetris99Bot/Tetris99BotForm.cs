@@ -11,7 +11,6 @@ namespace DeveTetris99Bot
 {
     public partial class Tetris99BotForm : Form
     {
-        private DirectShowCapturer dsc;
         public ArduinoSerialConnector CurrentSerialConnection { get; private set; }
         private Player tetrisPlayer;
 
@@ -51,18 +50,22 @@ namespace DeveTetris99Bot
             }
 
 
-            //dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
-            //{
-            //    var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
-            //    realGame.LoadCapturedGameData(nextBlocks);
-            //});
-
-            var dsc2 = new FakeDetector(this, pictureBox1, (bmp) =>
+            if (true)
             {
-                var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
-                realGame.LoadCapturedGameData(nextBlocks);
-            });
-
+                var dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
+                {
+                    var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
+                    realGame.LoadCapturedGameData(nextBlocks);
+                });
+            }
+            else
+            {
+                var dsc2 = new FakeDetector(this, pictureBox1, (bmp) =>
+                {
+                    var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
+                    realGame.LoadCapturedGameData(nextBlocks);
+                });
+            }
             ReloadComPorts();
 
             base.OnLoad(e);

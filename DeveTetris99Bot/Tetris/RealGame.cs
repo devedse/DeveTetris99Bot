@@ -58,6 +58,10 @@ namespace DeveTetris99Bot.Tetris
                     if (nextBlocksCaptured.Count == cur)
                     {
                         nextBlocksCaptured.AddRange(theNewIncomingTetriminos);
+                        foreach (var block in theNewIncomingTetriminos)
+                        {
+                            Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
+                        }
                     }
                     else
                     {
