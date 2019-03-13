@@ -40,6 +40,9 @@ namespace DeveTetris99Bot.Tetris
             gBlocks = drawPanelBlocks.CreateGraphics();
         }
 
+        private List<Tetrimino> _lastDetectedBlocks = new List<Tetrimino>();
+        private int _lastDetectedBlocksAreTheSameTimes = 0;
+
         public void LoadCapturedGameData(List<Tetrimino> theNewIncomingTetriminos)
         {
             if (running)
@@ -52,6 +55,36 @@ namespace DeveTetris99Bot.Tetris
                         return;
                     }
                 }
+
+                if (theNewIncomingTetriminos.Count != _lastDetectedBlocks.Count)
+                {
+                    _lastDetectedBlocks = theNewIncomingTetriminos;
+                    _lastDetectedBlocksAreTheSameTimes = 0;
+                    return;
+                }
+
+                for (int i = 0; i < theNewIncomingTetriminos.Count; i++)
+                {
+                    if (!theNewIncomingTetriminos[i].Equals(_lastDetectedBlocks[i]))
+                    {
+                        _lastDetectedBlocks = theNewIncomingTetriminos;
+                        _lastDetectedBlocksAreTheSameTimes = 0;
+                        return;
+                    }
+                }
+
+                _lastDetectedBlocksAreTheSameTimes++;
+
+                if (_lastDetectedBlocksAreTheSameTimes < 3)
+                {
+                    //Make sure we get 3 valid readings before acknowledging that these blocks are actually valid
+                    return;
+                }
+
+
+
+
+
 
                 lock (nextBlocksCaptured)
                 {
@@ -96,42 +129,6 @@ namespace DeveTetris99Bot.Tetris
                             Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
                         }
                         nextBlocksCaptured.AddRange(toAdd);
-
-
-                        //int aCount = cur;
-                        //int newCount = 0;
-
-                        //int brrr = cur;
-
-                        //while (newCount < theNewIncomingTetriminos.Count)
-                        //{
-
-
-                        //    if (aCount >= nextBlocksCaptured.Count)
-                        //    {
-                        //        var toAdd = theNewIncomingTetriminos.Skip(newCount).ToList();
-                        //        foreach (var block in toAdd)
-                        //        {
-                        //            Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
-                        //        }
-                        //        nextBlocksCaptured.AddRange(toAdd);
-                        //        return;
-                        //    }
-                        //    else
-                        //    {
-                        //        if (theNewIncomingTetriminos[newCount].Equals(nextBlocksCaptured[aCount]))
-                        //        {
-                        //            aCount++;
-                        //            newCount++;
-                        //        }
-                        //        else
-                        //        {
-                        //            newCount = 0;
-                        //            brrr++;
-                        //            aCount = brrr;
-                        //        }
-                        //    }
-                        //}
                     }
                 }
             }
@@ -260,6 +257,7 @@ namespace DeveTetris99Bot.Tetris
 
         public void MakeMove(List<Move> moves)
         {
+            int linesClearedNow = 0;
             foreach (var move in moves.Take(1))
             {
                 string keyToPress = null;
@@ -282,6 +280,7 @@ namespace DeveTetris99Bot.Tetris
 
                         board = result.Board;
                         linesCleared += result.LinesCleared;
+                        linesClearedNow = result.LinesCleared;
 
                         linesClearedLabel.Invoke(new Action(() =>
                         {
@@ -338,6 +337,8 @@ namespace DeveTetris99Bot.Tetris
                         keyToPress = "1";
                         //tetris99Form.CurrentSerialConnection.SendButtonPress("1");
                         Rotate();
+                        Rotate();
+                        Rotate();
                         break;
                     case Move.Enter:
                         break;
@@ -354,6 +355,15 @@ namespace DeveTetris99Bot.Tetris
                 if (!string.IsNullOrWhiteSpace(keyToPress))
                 {
                     tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress);
+                    if (keyToPress == "UH")
+                    {
+                        //If other players spawn shit, we need to wait for the animation
+                        Thread.Sleep(300);
+                    }
+                    if (linesClearedNow > 0)
+                    {
+                        Thread.Sleep(500);
+                    }
                 }
             }
         }

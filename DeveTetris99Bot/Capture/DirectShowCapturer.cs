@@ -97,7 +97,7 @@ namespace DeveTetris99Bot.Capture
                     {
                         var ss = Screenshot(pictureBox);
 
-                        ss.Save("outputje.png", ImageFormat.Png);
+                        //ss.Save("outputje.png", ImageFormat.Png);
 
                         try
                         {
@@ -108,7 +108,7 @@ namespace DeveTetris99Bot.Capture
 
                         }
 
-                        Task.Delay(100).Wait();
+                        Task.Delay(20).Wait();
                     }
                 });
             }
