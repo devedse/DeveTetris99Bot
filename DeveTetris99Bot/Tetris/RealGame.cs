@@ -100,11 +100,13 @@ namespace DeveTetris99Bot.Tetris
                 {
                     if (nextBlocksCaptured.Count == cur)
                     {
-                        nextBlocksCaptured.AddRange(detectionData.TheNewIncomingTetriminos);
-                        foreach (var block in detectionData.TheNewIncomingTetriminos)
+                        var toAdd = detectionData.TheNewIncomingTetriminos;
+                        for (int i = 0; i < toAdd.Count; i++)
                         {
-                            Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
+                            var block = toAdd[i];
+                            Console.WriteLine($"Adding block (New) ({nextBlocksCaptured.Count + i}):{Environment.NewLine}{block.ToStringRotateable()}");
                         }
+                        nextBlocksCaptured.AddRange(toAdd);
                     }
                     else
                     {
@@ -134,10 +136,7 @@ namespace DeveTetris99Bot.Tetris
 
                         var toAdd = detectionData.TheNewIncomingTetriminos.Skip(deducter).ToList();
 
-                        foreach (var block in toAdd)
-                        {
-                            Console.WriteLine($"Adding block:{Environment.NewLine}{block.ToStringRotateable()}");
-                        }
+
                         nextBlocksCaptured.AddRange(toAdd);
                     }
                 }
@@ -245,9 +244,10 @@ namespace DeveTetris99Bot.Tetris
 
             lock (nextBlocksCaptured)
             {
-                var viableBlocks = nextBlocksCaptured.Skip(cur).Take(6).ToList();
+                var viableBlocks = nextBlocksCaptured.Skip(cur).ToList();
 
                 var theNewBlock = viableBlocks.First();
+                Console.WriteLine($"New cur block ({cur}):{Environment.NewLine}{theNewBlock.ToStringRotateable()}");
                 curBlockWithPos = new TetriminoWithPosition(theNewBlock, 2, 3 + (theNewBlock.Width == 2 ? 1 : 0));
                 nextBlocks = viableBlocks.Skip(1).ToList();
             }
