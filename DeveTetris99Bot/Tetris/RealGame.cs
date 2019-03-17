@@ -2,6 +2,7 @@
 using DeveTetris99Bot.TetrisDetector;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -29,6 +30,8 @@ namespace DeveTetris99Bot.Tetris
         private int linesCleared = 0;
 
         private bool running = false;
+
+        private Stopwatch _timeSinceLastKeyPress = Stopwatch.StartNew();
 
         public RealGame(Tetris99BotForm tetris99Form, Panel drawPanel, Panel drawPanelBlocks, Panel drawPanelDanger, Label linesClearedLabel)
         {
@@ -282,9 +285,9 @@ namespace DeveTetris99Bot.Tetris
 
         public void MakeMove(List<Move> moves)
         {
-            int linesClearedNow = 0;
             foreach (var move in moves.Take(1))
             {
+                int linesClearedNow = 0;
                 string keyToPress = null;
 
                 switch (move)
@@ -392,7 +395,13 @@ namespace DeveTetris99Bot.Tetris
 
                 if (!string.IsNullOrWhiteSpace(keyToPress))
                 {
-                    tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress);
+                    var timeToWait = (int)Math.Max(0, 30 - _timeSinceLastKeyPress.Elapsed.TotalMilliseconds);
+                    if (timeToWait > 0)
+                    {
+                        Thread.Sleep(timeToWait);
+                    }
+                    _timeSinceLastKeyPress.Restart();
+                    tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress, false);
                     if (keyToPress == "UH")
                     {
                         //If other players spawn shit, we need to wait for the animation
