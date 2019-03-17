@@ -3,7 +3,9 @@ using DeveTetris99Bot.Capture;
 using DeveTetris99Bot.Tetris;
 using DeveTetris99Bot.TetrisDetector;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +14,8 @@ namespace DeveTetris99Bot
     public partial class Tetris99BotForm : Form
     {
         public ArduinoSerialConnector CurrentSerialConnection { get; private set; }
+
+        private RealGame realGame;
         private Player tetrisPlayer;
 
         public Tetris99BotForm()
@@ -21,7 +25,7 @@ namespace DeveTetris99Bot
 
         protected override void OnLoad(EventArgs e)
         {
-            var realGame = new RealGame(this, panelSimulator, panelSimulatorBlocks, panelDanger, labelLinesCleared);
+            realGame = new RealGame(this, panelSimulator, panelSimulatorBlocks, panelDanger, labelLinesCleared);
             tetrisPlayer = new Player(realGame, realGame);
 
 
@@ -55,7 +59,7 @@ namespace DeveTetris99Bot
                 var dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
                 {
                     var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
-                    realGame.LoadCapturedGameData(nextBlocks);
+                    //realGame.LoadCapturedGameData(nextBlocks);
                 });
             }
             else
@@ -76,6 +80,148 @@ namespace DeveTetris99Bot
             Task.Run(() =>
             {
                 tetrisPlayer.Play();
+            });
+
+            Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+
+                int ms = 100;
+
+                realGame.LoadCapturedGameData(new TetrisDetectionData()
+                {
+                    TheNewIncomingTetriminos = new List<Tetrimino>()
+                    {
+                        Tetrimino.O,
+                        Tetrimino.I,
+                        Tetrimino.J,
+                        Tetrimino.Z,
+                        Tetrimino.S,
+                        Tetrimino.L,
+                    }
+                });
+
+                Thread.Sleep(ms);
+
+                realGame.LoadCapturedGameData(new TetrisDetectionData()
+                {
+                    TheNewIncomingTetriminos = new List<Tetrimino>()
+                    {
+                       Tetrimino.I,
+                        Tetrimino.J,
+                        Tetrimino.Z,
+                        Tetrimino.S,
+                        Tetrimino.L,
+                        Tetrimino.T,
+                    }
+                });
+
+                Thread.Sleep(ms);
+
+                realGame.LoadCapturedGameData(new TetrisDetectionData()
+                {
+                    TheNewIncomingTetriminos = new List<Tetrimino>()
+                    {
+                        Tetrimino.J,
+                        Tetrimino.Z,
+                        Tetrimino.S,
+                        Tetrimino.L,
+                        Tetrimino.T,
+                        Tetrimino.L,
+                        Tetrimino.O
+                    }
+                });
+
+                Thread.Sleep(ms);
+
+                realGame.LoadCapturedGameData(new TetrisDetectionData()
+                {
+                    TheNewIncomingTetriminos = new List<Tetrimino>()
+                    {
+                        Tetrimino.S,
+                        Tetrimino.L,
+                        Tetrimino.T,
+                        Tetrimino.L,
+                        Tetrimino.O,
+                        Tetrimino.J
+                    }
+                });
+
+                Thread.Sleep(ms);
+
+                realGame.LoadCapturedGameData(new TetrisDetectionData()
+                {
+                    TheNewIncomingTetriminos = new List<Tetrimino>()
+                    {
+                        
+                        Tetrimino.L,
+                        Tetrimino.T,
+                        Tetrimino.L,
+                        Tetrimino.O,
+                        Tetrimino.J,
+                        Tetrimino.Z
+                    }
+                });
+
+                Thread.Sleep(ms);
+
+                realGame.LoadCapturedGameData(new TetrisDetectionData()
+                {
+                    TheNewIncomingTetriminos = new List<Tetrimino>()
+                    {
+                        Tetrimino.L,
+                        Tetrimino.O,
+                        Tetrimino.J,
+                        Tetrimino.Z,
+                        Tetrimino.I,
+                        Tetrimino.S
+                    }
+                });
+
+                Thread.Sleep(ms);
+
+                realGame.LoadCapturedGameData(new TetrisDetectionData()
+                {
+                    TheNewIncomingTetriminos = new List<Tetrimino>()
+                    {
+                        Tetrimino.O,
+                        Tetrimino.J,
+                        Tetrimino.Z,
+                        Tetrimino.I,
+                        Tetrimino.S,
+                        Tetrimino.T
+                    }
+                });
+
+                Thread.Sleep(ms);
+
+                realGame.LoadCapturedGameData(new TetrisDetectionData()
+                {
+                    TheNewIncomingTetriminos = new List<Tetrimino>()
+                    {
+                        Tetrimino.J,
+                        Tetrimino.Z,
+                        Tetrimino.I,
+                        Tetrimino.S,
+                        Tetrimino.T,
+                        Tetrimino.T
+                    }
+                });
+
+                //Thread.Sleep(ms);
+
+                //realGame.LoadCapturedGameData(new TetrisDetectionData()
+                //{
+                //    TheNewIncomingTetriminos = new List<Tetrimino>()
+                //    {
+                //        Tetrimino.J,
+                //        Tetrimino.Z,
+                //        Tetrimino.I,
+                //        Tetrimino.S,
+                //        Tetrimino.T,
+                //        Tetrimino.T
+                //    }
+                //});
             });
         }
 

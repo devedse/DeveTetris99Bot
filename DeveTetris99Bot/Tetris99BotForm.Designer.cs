@@ -72,14 +72,14 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(1300, 12);
+            this.panel1.Location = new System.Drawing.Point(1065, 775);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 400);
             this.panel1.TabIndex = 1;
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(1506, 12);
+            this.panel2.Location = new System.Drawing.Point(1307, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(80, 400);
             this.panel2.TabIndex = 2;
@@ -180,7 +180,7 @@
             // 
             // buttonA
             // 
-            this.buttonA.Location = new System.Drawing.Point(1800, 600);
+            this.buttonA.Location = new System.Drawing.Point(1485, 521);
             this.buttonA.Margin = new System.Windows.Forms.Padding(2);
             this.buttonA.Name = "buttonA";
             this.buttonA.Size = new System.Drawing.Size(50, 52);
@@ -192,7 +192,7 @@
             // 
             // panelSimulator
             // 
-            this.panelSimulator.Location = new System.Drawing.Point(1616, 12);
+            this.panelSimulator.Location = new System.Drawing.Point(1399, 12);
             this.panelSimulator.Name = "panelSimulator";
             this.panelSimulator.Size = new System.Drawing.Size(200, 400);
             this.panelSimulator.TabIndex = 2;
@@ -217,7 +217,7 @@
             // 
             // buttonB
             // 
-            this.buttonB.Location = new System.Drawing.Point(1750, 650);
+            this.buttonB.Location = new System.Drawing.Point(1520, 521);
             this.buttonB.Margin = new System.Windows.Forms.Padding(2);
             this.buttonB.Name = "buttonB";
             this.buttonB.Size = new System.Drawing.Size(50, 52);
@@ -286,7 +286,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1977, 633);
+            this.button1.Location = new System.Drawing.Point(1471, 686);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(99, 57);
             this.button1.TabIndex = 17;
@@ -308,7 +308,7 @@
             // 
             // panelSimulatorBlocks
             // 
-            this.panelSimulatorBlocks.Location = new System.Drawing.Point(1822, 12);
+            this.panelSimulatorBlocks.Location = new System.Drawing.Point(1605, 12);
             this.panelSimulatorBlocks.Name = "panelSimulatorBlocks";
             this.panelSimulatorBlocks.Size = new System.Drawing.Size(80, 400);
             this.panelSimulatorBlocks.TabIndex = 3;
@@ -381,7 +381,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2084, 891);
+            this.ClientSize = new System.Drawing.Size(1684, 722);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.buttonUR);

@@ -66,30 +66,30 @@ namespace DeveTetris99Bot.Tetris
                     }
                 }
 
-                if (detectionData.TheNewIncomingTetriminos.Count != _lastDetectedBlocks.Count)
-                {
-                    _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
-                    _lastDetectedBlocksAreTheSameTimes = 0;
-                    return;
-                }
+                //if (detectionData.TheNewIncomingTetriminos.Count != _lastDetectedBlocks.Count)
+                //{
+                //    _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
+                //    _lastDetectedBlocksAreTheSameTimes = 0;
+                //    return;
+                //}
 
-                for (int i = 0; i < detectionData.TheNewIncomingTetriminos.Count; i++)
-                {
-                    if (!detectionData.TheNewIncomingTetriminos[i].Equals(_lastDetectedBlocks[i]))
-                    {
-                        _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
-                        _lastDetectedBlocksAreTheSameTimes = 0;
-                        return;
-                    }
-                }
+                //for (int i = 0; i < detectionData.TheNewIncomingTetriminos.Count; i++)
+                //{
+                //    if (!detectionData.TheNewIncomingTetriminos[i].Equals(_lastDetectedBlocks[i]))
+                //    {
+                //        _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
+                //        _lastDetectedBlocksAreTheSameTimes = 0;
+                //        return;
+                //    }
+                //}
 
-                _lastDetectedBlocksAreTheSameTimes++;
+                //_lastDetectedBlocksAreTheSameTimes++;
 
-                if (_lastDetectedBlocksAreTheSameTimes < 3)
-                {
-                    //Make sure we get 3 valid readings before acknowledging that these blocks are actually valid
-                    return;
-                }
+                //if (_lastDetectedBlocksAreTheSameTimes < 3)
+                //{
+                //    //Make sure we get 3 valid readings before acknowledging that these blocks are actually valid
+                //    return;
+                //}
 
 
 
@@ -98,7 +98,7 @@ namespace DeveTetris99Bot.Tetris
 
                 lock (nextBlocksCaptured)
                 {
-                    if (nextBlocksCaptured.Count == cur)
+                    if (nextBlocksCaptured.Count == 0)
                     {
                         var toAdd = detectionData.TheNewIncomingTetriminos;
                         for (int i = 0; i < toAdd.Count; i++)
@@ -114,6 +114,7 @@ namespace DeveTetris99Bot.Tetris
                         int lastInNew = detectionData.TheNewIncomingTetriminos.Count - 1;
 
                         int deducter = nextBlocksCaptured.Count;
+                        bool hasFoundEqualsBefore = false;
 
                         while (lastInNew >= 0)
                         {
@@ -122,15 +123,25 @@ namespace DeveTetris99Bot.Tetris
 
                             if (!blockInExisting.Equals(blockInNew))
                             {
-                                deducter = lastInNew;
                                 //reset the existing counter
                                 lastInExisting = nextBlocksCaptured.Count - 1;
+                                if (hasFoundEqualsBefore)
+                                {
+                                    hasFoundEqualsBefore = false;
+                                }
+                                else
+                                {
+                                    lastInNew--;
+                                }
+
+                                deducter = lastInNew + 1;
                             }
                             else
                             {
+                                hasFoundEqualsBefore = true;
                                 lastInExisting--;
+                                lastInNew--;
                             }
-                            lastInNew--;
                         }
 
 
@@ -138,7 +149,7 @@ namespace DeveTetris99Bot.Tetris
                         for (int i = 0; i < toAdd.Count; i++)
                         {
                             var block = toAdd[i];
-                            Console.WriteLine($"Adding block (New) ({nextBlocksCaptured.Count + i}):{Environment.NewLine}{block.ToStringRotateable()}");
+                            Console.WriteLine($"Adding block ({nextBlocksCaptured.Count + i}):{Environment.NewLine}{block.ToStringRotateable()}");
                         }
 
                         nextBlocksCaptured.AddRange(toAdd);
@@ -432,7 +443,7 @@ namespace DeveTetris99Bot.Tetris
             tetris99Form.CurrentSerialConnection.SendButtonPress("RH");
             tetris99Form.CurrentSerialConnection.SendButtonPress("DH");
 
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
 
             //Select Aanvallers
             tetris99Form.CurrentSerialConnection.SendButtonPress("DR");
