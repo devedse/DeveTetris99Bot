@@ -395,7 +395,7 @@ namespace DeveTetris99Bot.Tetris
 
                 if (!string.IsNullOrWhiteSpace(keyToPress))
                 {
-                    var timeToWait = (int)Math.Max(0, 30 - _timeSinceLastKeyPress.Elapsed.TotalMilliseconds);
+                    var timeToWait = (int)Math.Max(0, 35 - _timeSinceLastKeyPress.Elapsed.TotalMilliseconds);
                     if (timeToWait > 0)
                     {
                         Thread.Sleep(timeToWait);
