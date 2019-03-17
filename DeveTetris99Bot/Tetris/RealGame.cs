@@ -69,30 +69,30 @@ namespace DeveTetris99Bot.Tetris
                     }
                 }
 
-                //if (detectionData.TheNewIncomingTetriminos.Count != _lastDetectedBlocks.Count)
-                //{
-                //    _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
-                //    _lastDetectedBlocksAreTheSameTimes = 0;
-                //    return;
-                //}
+                if (detectionData.TheNewIncomingTetriminos.Count != _lastDetectedBlocks.Count)
+                {
+                    _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
+                    _lastDetectedBlocksAreTheSameTimes = 0;
+                    return;
+                }
 
-                //for (int i = 0; i < detectionData.TheNewIncomingTetriminos.Count; i++)
-                //{
-                //    if (!detectionData.TheNewIncomingTetriminos[i].Equals(_lastDetectedBlocks[i]))
-                //    {
-                //        _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
-                //        _lastDetectedBlocksAreTheSameTimes = 0;
-                //        return;
-                //    }
-                //}
+                for (int i = 0; i < detectionData.TheNewIncomingTetriminos.Count; i++)
+                {
+                    if (!detectionData.TheNewIncomingTetriminos[i].Equals(_lastDetectedBlocks[i]))
+                    {
+                        _lastDetectedBlocks = detectionData.TheNewIncomingTetriminos;
+                        _lastDetectedBlocksAreTheSameTimes = 0;
+                        return;
+                    }
+                }
 
-                //_lastDetectedBlocksAreTheSameTimes++;
+                _lastDetectedBlocksAreTheSameTimes++;
 
-                //if (_lastDetectedBlocksAreTheSameTimes < 3)
-                //{
-                //    //Make sure we get 3 valid readings before acknowledging that these blocks are actually valid
-                //    return;
-                //}
+                if (_lastDetectedBlocksAreTheSameTimes < 3)
+                {
+                    //Make sure we get 3 valid readings before acknowledging that these blocks are actually valid
+                    return;
+                }
 
 
 
@@ -116,7 +116,7 @@ namespace DeveTetris99Bot.Tetris
                         int lastInExisting = nextBlocksCaptured.Count - 1;
                         int lastInNew = detectionData.TheNewIncomingTetriminos.Count - 1;
 
-                        int deducter = nextBlocksCaptured.Count;
+                        int deducter = detectionData.TheNewIncomingTetriminos.Count;
                         bool hasFoundEqualsBefore = false;
 
                         while (lastInNew >= 0)
@@ -395,12 +395,13 @@ namespace DeveTetris99Bot.Tetris
 
                 if (!string.IsNullOrWhiteSpace(keyToPress))
                 {
-                    var timeToWait = (int)Math.Max(0, 30 - _timeSinceLastKeyPress.Elapsed.TotalMilliseconds);
+                    var timeToWait = (int)Math.Max(0, 25 - _timeSinceLastKeyPress.Elapsed.TotalMilliseconds);
                     if (timeToWait > 0)
                     {
                         Thread.Sleep(timeToWait);
                     }
-                    tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress);
+                    tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress, false);
+                    _timeSinceLastKeyPress.Restart();
                     if (keyToPress == "UH")
                     {
                         //If other players spawn shit, we need to wait for the animation
