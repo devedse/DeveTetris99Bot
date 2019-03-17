@@ -31,12 +31,15 @@ namespace DeveTetris99Bot.ArduinoSerial
             }
         }
 
-        public void SendButtonPress(string button)
+        public void SendButtonPress(string button, bool waitAfter = true)
         {
             SendButtonDown(button);
             Thread.Sleep(30);
             SendButtonUp(button);
-            Thread.Sleep(30);
+            if (waitAfter)
+            {
+                Thread.Sleep(30);
+            }
         }
 
         public void SendButtonDown(string button)

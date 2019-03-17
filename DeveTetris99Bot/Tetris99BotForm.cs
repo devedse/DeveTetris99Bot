@@ -59,7 +59,7 @@ namespace DeveTetris99Bot
                 var dsc = new DirectShowCapturer(this, pictureBox1, (bmp) =>
                 {
                     var nextBlocks = TetrisDetectorCalculator.ScreenRefreshed(null, bmp, panel1, panel2);
-                    //realGame.LoadCapturedGameData(nextBlocks);
+                    realGame.LoadCapturedGameData(nextBlocks);
                 });
             }
             else
@@ -82,147 +82,147 @@ namespace DeveTetris99Bot
                 tetrisPlayer.Play();
             });
 
-            Task.Run(() =>
-            {
-                Thread.Sleep(1000);
+            //Task.Run(() =>
+            //{
+            //    Thread.Sleep(1000);
 
-                int ms = 100;
+            //    int ms = 100;
 
-                realGame.LoadCapturedGameData(new TetrisDetectionData()
-                {
-                    TheNewIncomingTetriminos = new List<Tetrimino>()
-                    {
-                        Tetrimino.O,
-                        Tetrimino.I,
-                        Tetrimino.J,
-                        Tetrimino.Z,
-                        Tetrimino.S,
-                        Tetrimino.L,
-                    }
-                });
+            //    realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    {
+            //        TheNewIncomingTetriminos = new List<Tetrimino>()
+            //        {
+            //            Tetrimino.O,
+            //            Tetrimino.I,
+            //            Tetrimino.J,
+            //            Tetrimino.Z,
+            //            Tetrimino.S,
+            //            Tetrimino.L,
+            //        }
+            //    });
 
-                Thread.Sleep(ms);
+            //    Thread.Sleep(ms);
 
-                realGame.LoadCapturedGameData(new TetrisDetectionData()
-                {
-                    TheNewIncomingTetriminos = new List<Tetrimino>()
-                    {
-                       Tetrimino.I,
-                        Tetrimino.J,
-                        Tetrimino.Z,
-                        Tetrimino.S,
-                        Tetrimino.L,
-                        Tetrimino.T,
-                    }
-                });
+            //    realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    {
+            //        TheNewIncomingTetriminos = new List<Tetrimino>()
+            //        {
+            //           Tetrimino.I,
+            //            Tetrimino.J,
+            //            Tetrimino.Z,
+            //            Tetrimino.S,
+            //            Tetrimino.L,
+            //            Tetrimino.T,
+            //        }
+            //    });
 
-                Thread.Sleep(ms);
+            //    Thread.Sleep(ms);
 
-                realGame.LoadCapturedGameData(new TetrisDetectionData()
-                {
-                    TheNewIncomingTetriminos = new List<Tetrimino>()
-                    {
-                        Tetrimino.J,
-                        Tetrimino.Z,
-                        Tetrimino.S,
-                        Tetrimino.L,
-                        Tetrimino.T,
-                        Tetrimino.L,
-                        Tetrimino.O
-                    }
-                });
+            //    realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    {
+            //        TheNewIncomingTetriminos = new List<Tetrimino>()
+            //        {
+            //            Tetrimino.J,
+            //            Tetrimino.Z,
+            //            Tetrimino.S,
+            //            Tetrimino.L,
+            //            Tetrimino.T,
+            //            Tetrimino.L,
+            //            Tetrimino.O
+            //        }
+            //    });
 
-                Thread.Sleep(ms);
+            //    Thread.Sleep(ms);
 
-                realGame.LoadCapturedGameData(new TetrisDetectionData()
-                {
-                    TheNewIncomingTetriminos = new List<Tetrimino>()
-                    {
-                        Tetrimino.S,
-                        Tetrimino.L,
-                        Tetrimino.T,
-                        Tetrimino.L,
-                        Tetrimino.O,
-                        Tetrimino.J
-                    }
-                });
+            //    realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    {
+            //        TheNewIncomingTetriminos = new List<Tetrimino>()
+            //        {
+            //            Tetrimino.S,
+            //            Tetrimino.L,
+            //            Tetrimino.T,
+            //            Tetrimino.L,
+            //            Tetrimino.O,
+            //            Tetrimino.J
+            //        }
+            //    });
 
-                Thread.Sleep(ms);
+            //    Thread.Sleep(ms);
 
-                realGame.LoadCapturedGameData(new TetrisDetectionData()
-                {
-                    TheNewIncomingTetriminos = new List<Tetrimino>()
-                    {
+            //    realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    {
+            //        TheNewIncomingTetriminos = new List<Tetrimino>()
+            //        {
                         
-                        Tetrimino.L,
-                        Tetrimino.T,
-                        Tetrimino.L,
-                        Tetrimino.O,
-                        Tetrimino.J,
-                        Tetrimino.Z
-                    }
-                });
+            //            Tetrimino.L,
+            //            Tetrimino.T,
+            //            Tetrimino.L,
+            //            Tetrimino.O,
+            //            Tetrimino.J,
+            //            Tetrimino.Z
+            //        }
+            //    });
 
-                Thread.Sleep(ms);
+            //    Thread.Sleep(ms);
 
-                realGame.LoadCapturedGameData(new TetrisDetectionData()
-                {
-                    TheNewIncomingTetriminos = new List<Tetrimino>()
-                    {
-                        Tetrimino.L,
-                        Tetrimino.O,
-                        Tetrimino.J,
-                        Tetrimino.Z,
-                        Tetrimino.I,
-                        Tetrimino.S
-                    }
-                });
+            //    realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    {
+            //        TheNewIncomingTetriminos = new List<Tetrimino>()
+            //        {
+            //            Tetrimino.L,
+            //            Tetrimino.O,
+            //            Tetrimino.J,
+            //            Tetrimino.Z,
+            //            Tetrimino.I,
+            //            Tetrimino.S
+            //        }
+            //    });
 
-                Thread.Sleep(ms);
+            //    Thread.Sleep(ms);
 
-                realGame.LoadCapturedGameData(new TetrisDetectionData()
-                {
-                    TheNewIncomingTetriminos = new List<Tetrimino>()
-                    {
-                        Tetrimino.O,
-                        Tetrimino.J,
-                        Tetrimino.Z,
-                        Tetrimino.I,
-                        Tetrimino.S,
-                        Tetrimino.T
-                    }
-                });
+            //    realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    {
+            //        TheNewIncomingTetriminos = new List<Tetrimino>()
+            //        {
+            //            Tetrimino.O,
+            //            Tetrimino.J,
+            //            Tetrimino.Z,
+            //            Tetrimino.I,
+            //            Tetrimino.S,
+            //            Tetrimino.T
+            //        }
+            //    });
 
-                Thread.Sleep(ms);
+            //    Thread.Sleep(ms);
 
-                realGame.LoadCapturedGameData(new TetrisDetectionData()
-                {
-                    TheNewIncomingTetriminos = new List<Tetrimino>()
-                    {
-                        Tetrimino.J,
-                        Tetrimino.Z,
-                        Tetrimino.I,
-                        Tetrimino.S,
-                        Tetrimino.T,
-                        Tetrimino.T
-                    }
-                });
+            //    realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    {
+            //        TheNewIncomingTetriminos = new List<Tetrimino>()
+            //        {
+            //            Tetrimino.J,
+            //            Tetrimino.Z,
+            //            Tetrimino.I,
+            //            Tetrimino.S,
+            //            Tetrimino.T,
+            //            Tetrimino.T
+            //        }
+            //    });
 
-                //Thread.Sleep(ms);
+            //    //Thread.Sleep(ms);
 
-                //realGame.LoadCapturedGameData(new TetrisDetectionData()
-                //{
-                //    TheNewIncomingTetriminos = new List<Tetrimino>()
-                //    {
-                //        Tetrimino.J,
-                //        Tetrimino.Z,
-                //        Tetrimino.I,
-                //        Tetrimino.S,
-                //        Tetrimino.T,
-                //        Tetrimino.T
-                //    }
-                //});
-            });
+            //    //realGame.LoadCapturedGameData(new TetrisDetectionData()
+            //    //{
+            //    //    TheNewIncomingTetriminos = new List<Tetrimino>()
+            //    //    {
+            //    //        Tetrimino.J,
+            //    //        Tetrimino.Z,
+            //    //        Tetrimino.I,
+            //    //        Tetrimino.S,
+            //    //        Tetrimino.T,
+            //    //        Tetrimino.T
+            //    //    }
+            //    //});
+            //});
         }
 
         private void ReloadComPorts()
