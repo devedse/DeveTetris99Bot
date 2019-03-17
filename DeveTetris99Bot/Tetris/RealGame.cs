@@ -400,8 +400,8 @@ namespace DeveTetris99Bot.Tetris
                     {
                         Thread.Sleep(timeToWait);
                     }
-                    _timeSinceLastKeyPress.Restart();
                     tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress, false);
+                    _timeSinceLastKeyPress.Restart();
                     if (keyToPress == "UH")
                     {
                         //If other players spawn shit, we need to wait for the animation
