@@ -135,7 +135,11 @@ namespace DeveTetris99Bot.Tetris
 
 
                         var toAdd = detectionData.TheNewIncomingTetriminos.Skip(deducter).ToList();
-
+                        for (int i = 0; i < toAdd.Count; i++)
+                        {
+                            var block = toAdd[i];
+                            Console.WriteLine($"Adding block (New) ({nextBlocksCaptured.Count + i}):{Environment.NewLine}{block.ToStringRotateable()}");
+                        }
 
                         nextBlocksCaptured.AddRange(toAdd);
                     }
