@@ -16,6 +16,13 @@ After seeing my girlfriend reck havoc in Tetris 99 I thought hey I can do that t
 | 6 | Simulate Xbox 360 controller | I hacked an Arduino library from ([Source](https://github.com/kuwoh/XInputPadMicro)) (See section Arduino library) |
 | 7 | Send Xbox 360 controller commands to COOV N100 | Connect Arduino Leonardo using it's USB port to the COOV N100 ([Buy](https://nl.aliexpress.com/item/Coov-N100-for-PS3-PS4-Xbox-One-Xbox-360-USB-Controller-Converter-Adapter-to-Nintendo-Switch/32823586852.html)) and plug that into the USB port from the switch |
 
+## Todo
+
+| Nr | Description |
+|--|--|
+| 1 | Detect sent lines from enemy players and act upon them |
+| 2 | Handle more accurately when people are going to send lines and play slower then (currently it's too cautious) |
+
 ## Arduino library
 
 Deploying this is simply done by using Freematics Arduino Builder and deploying the compiled file (with Bootloader) in the folder: https://github.com/devedse/DeveTetris99Bot/tree/master/ArduinoGamePadEmulatorXinput/Compiled
