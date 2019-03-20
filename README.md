@@ -18,4 +18,4 @@ After seeing my girlfriend reck havoc in Tetris 99 I thought hey I can do that t
 
 ## Arduino library
 
-Deploying this is simply done by using Freematics Arduino Builder and deploying the compiled file in the folder "Compiled"
+Deploying this is simply done by using Freematics Arduino Builder and deploying the compiled file (with Bootloader) in the folder: https://github.com/devedse/DeveTetris99Bot/tree/master/ArduinoGamePadEmulatorXinput/Compiled
