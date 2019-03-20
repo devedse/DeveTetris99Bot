@@ -284,7 +284,7 @@ namespace DeveTetris99Bot.Tetris
 
         public GameState ReadGameState()
         {
-            var gameState = new GameState(board, curBlockWithPos, nextBlocks, inStash);
+            var gameState = new GameState(board, curBlockWithPos, nextBlocks, inStash, DetectIfThereIsDanger());
 
             return gameState;
         }
@@ -391,21 +391,7 @@ namespace DeveTetris99Bot.Tetris
                 DrawCurrentBlock();
                 DrawNextBlocks();
 
-                //double dangerTimer = 0.0;
-                //var timeSinceLastDanger = DateTime.Now - _lastDanger;
-                var timeSinceLastNoDanger = DateTime.Now - _lastNoDanger;
-                //bool thereWasDanger = timeSinceLastDanger.TotalSeconds < dangerTimer;
-
-                bool thereWasDanger = _lastDanger > _lastNoDanger;
-
-                if (thereWasDanger && timeSinceLastNoDanger.TotalSeconds > 2)
-                {
-
-                }
-                else
-                {
-                    thereWasDanger = false;
-                }
+                bool thereWasDanger = DetectIfThereIsDanger();
 
                 if (thereWasDanger)
                 {
@@ -446,10 +432,43 @@ namespace DeveTetris99Bot.Tetris
                     }
                     if (linesClearedNow > 0)
                     {
+                        //Theres no more danger now
+                        _lastDanger = DateTime.MinValue;
+                        _lastNoDanger = DateTime.Now;
+
                         minTimeToWait = FrameDurationHelper.ToFrameDuration(48);
                     }
                 }
             }
+        }
+
+        private bool DetectIfThereIsDanger()
+        {
+            double dangerTimer = 2;
+            var timeSinceLastDanger = DateTime.Now - _lastDanger;
+            var timeSinceLastNoDanger = DateTime.Now - _lastNoDanger;
+            //bool thereWasDanger = timeSinceLastDanger.TotalSeconds < dangerTimer;
+
+            bool thereWasDanger = _lastDanger > _lastNoDanger;
+
+            if (!thereWasDanger)
+            {
+                if (timeSinceLastDanger.TotalSeconds < dangerTimer)
+                {
+                    thereWasDanger = true;
+                }
+            }
+
+            if (thereWasDanger && timeSinceLastNoDanger.TotalSeconds < 2)
+            {
+
+            }
+            else
+            {
+                thereWasDanger = false;
+            }
+
+            return thereWasDanger;
         }
 
         private int minTimeToWait = 0;

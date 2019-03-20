@@ -41,6 +41,15 @@ namespace DeveTetris99Bot.Tetris
                     continue;
                 }
 
+                if (gameState.ThereIsDanger)
+                {
+                    Evaluator.MaxHeight = 19;
+                }
+                else
+                {
+                    Evaluator.MaxHeight = 4;
+                }
+
                 //Console.WriteLine(gameState.Board);
                 //Console.WriteLine(string.Join(";", gameState.NextTetriminoes));
                 var twp = gameState.FallingTetrimino;

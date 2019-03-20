@@ -80,7 +80,7 @@ namespace DeveTetris99Bot.Tetris
 
         public GameState ReadGameState()
         {
-            var gameState = new GameState(board, curBlockWithPos, nextBlocks, inStash);
+            var gameState = new GameState(board, curBlockWithPos, nextBlocks, inStash, false);
 
             return gameState;
         }

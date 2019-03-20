@@ -5,6 +5,7 @@ namespace DeveTetris99Bot.Tetris.Logic
 {
     public class Evaluator
     {
+        public static int MaxHeight = 4;
 
         public EvaluationState GetEvaluation(Board board, List<int> linesCleared, bool lineInStash)
         {
@@ -65,7 +66,7 @@ namespace DeveTetris99Bot.Tetris.Logic
             {
                 maxColumnHeight = Math.Max(maxColumnHeight, board.GetColumnHeight(i));
             }
-            return new EvaluationState(badCnt, flatRate, nonTetrisLinesCleared, tetrisLinesCleared, lastColumnHeight, holeCnt, virtualHole, maxColumnHeight > board.Height - 4, lineInStash);
+            return new EvaluationState(badCnt, flatRate, nonTetrisLinesCleared, tetrisLinesCleared, lastColumnHeight, holeCnt, virtualHole, maxColumnHeight > board.Height - MaxHeight, lineInStash);
 
         }
     }
