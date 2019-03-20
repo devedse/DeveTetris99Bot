@@ -5,7 +5,7 @@ namespace DeveTetris99Bot.TetrisDetector
 {
     public class TetrisDetectionData
     {
-        public bool Danger { get; set; }
+        public int Danger { get; set; }
         public List<Tetrimino> TheNewIncomingTetriminos { get; set; }
     }
 }

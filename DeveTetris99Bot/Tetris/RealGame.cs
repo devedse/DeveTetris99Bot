@@ -1,4 +1,5 @@
 ﻿using DeveTetris99Bot.Config;
+using DeveTetris99Bot.Helpers;
 using DeveTetris99Bot.TetrisDetector;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace DeveTetris99Bot.Tetris
         private readonly Panel drawPanelBlocks;
         private readonly Panel panelDanger;
         private readonly Label linesClearedLabel;
+        private readonly Label dangerCountLabel;
         private Graphics g;
         private Graphics gBlocks;
         private Graphics gDanger;
@@ -33,7 +35,7 @@ namespace DeveTetris99Bot.Tetris
 
         private Stopwatch _timeSinceLastKeyPress = Stopwatch.StartNew();
 
-        public RealGame(Tetris99BotForm tetris99Form, Panel drawPanel, Panel drawPanelBlocks, Panel drawPanelDanger, Label linesClearedLabel)
+        public RealGame(Tetris99BotForm tetris99Form, Panel drawPanel, Panel drawPanelBlocks, Panel drawPanelDanger, Label linesClearedLabel, Label dangerCountLabel)
         {
             board = new Board(TetrisConstants.BoardWidth, TetrisConstants.BoardHeight);
 
@@ -42,6 +44,7 @@ namespace DeveTetris99Bot.Tetris
             this.drawPanelBlocks = drawPanelBlocks;
             panelDanger = drawPanelDanger;
             this.linesClearedLabel = linesClearedLabel;
+            this.dangerCountLabel = dangerCountLabel;
             g = drawPanel.CreateGraphics();
             gBlocks = drawPanelBlocks.CreateGraphics();
             gDanger = drawPanelDanger.CreateGraphics();
@@ -49,16 +52,24 @@ namespace DeveTetris99Bot.Tetris
 
         private List<Tetrimino> _lastDetectedBlocks = new List<Tetrimino>();
         private int _lastDetectedBlocksAreTheSameTimes = 0;
+        private int _lastDetectedDanger = 0;
         private DateTime _lastDanger = DateTime.MinValue;
+        private DateTime _lastNoDanger = DateTime.MinValue;
 
         public void LoadCapturedGameData(TetrisDetectionData detectionData)
         {
             if (running)
             {
-                if (detectionData.Danger)
+                if (detectionData.Danger > 0)
                 {
                     _lastDanger = DateTime.Now;
+                    _lastDetectedDanger = detectionData.Danger;
                 }
+                else
+                {
+                    _lastNoDanger = DateTime.Now;
+                }
+
 
                 foreach (var item in detectionData.TheNewIncomingTetriminos)
                 {
@@ -380,13 +391,29 @@ namespace DeveTetris99Bot.Tetris
                 DrawCurrentBlock();
                 DrawNextBlocks();
 
-                double dangerTimer = 2;
-                var timeSinceLastDanger = DateTime.Now - _lastDanger;
-                bool thereWasDanger = timeSinceLastDanger.TotalSeconds < dangerTimer;
+                //double dangerTimer = 0.0;
+                //var timeSinceLastDanger = DateTime.Now - _lastDanger;
+                var timeSinceLastNoDanger = DateTime.Now - _lastNoDanger;
+                //bool thereWasDanger = timeSinceLastDanger.TotalSeconds < dangerTimer;
+
+                bool thereWasDanger = _lastDanger > _lastNoDanger;
+
+                if (thereWasDanger && timeSinceLastNoDanger.TotalSeconds > 2)
+                {
+
+                }
+                else
+                {
+                    thereWasDanger = false;
+                }
 
                 if (thereWasDanger)
                 {
                     gDanger.Clear(Color.Red);
+                    dangerCountLabel.Invoke(new Action(() =>
+                    {
+                        dangerCountLabel.Text = _lastDetectedDanger.ToString();
+                    }));
                 }
                 else
                 {
@@ -395,11 +422,14 @@ namespace DeveTetris99Bot.Tetris
 
                 if (!string.IsNullOrWhiteSpace(keyToPress))
                 {
-                    var timeToWait = (int)Math.Max(0, 35 - _timeSinceLastKeyPress.Elapsed.TotalMilliseconds);
+                    var timeToWait = (int)Math.Max(0, minTimeToWait - _timeSinceLastKeyPress.Elapsed.TotalMilliseconds);
                     if (timeToWait > 0)
                     {
                         Thread.Sleep(timeToWait);
                     }
+
+                    minTimeToWait = FrameDurationHelper.ToFrameDuration(3);
+
                     tetris99Form.CurrentSerialConnection.SendButtonPress(keyToPress, false);
                     _timeSinceLastKeyPress.Restart();
                     if (keyToPress == "UH")
@@ -407,20 +437,22 @@ namespace DeveTetris99Bot.Tetris
                         //If other players spawn shit, we need to wait for the animation
                         if (thereWasDanger)
                         {
-                            Thread.Sleep(1000);
+                            minTimeToWait = FrameDurationHelper.ToFrameDuration(33 + _lastDetectedDanger * 4);
                         }
                         else
                         {
-                            Thread.Sleep(80);
+                            minTimeToWait = FrameDurationHelper.ToFrameDuration(8);
                         }
                     }
                     if (linesClearedNow > 0)
                     {
-                        Thread.Sleep(800);
+                        minTimeToWait = FrameDurationHelper.ToFrameDuration(48);
                     }
                 }
             }
         }
+
+        private int minTimeToWait = 0;
 
         public void Rotate()
         {

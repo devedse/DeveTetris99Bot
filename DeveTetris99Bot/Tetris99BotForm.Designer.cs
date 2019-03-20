@@ -58,6 +58,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.buttonUR = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.labelDanger = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -377,11 +378,22 @@
             this.button6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Down);
             this.button6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonArduinoAction_Up);
             // 
+            // labelDanger
+            // 
+            this.labelDanger.AutoSize = true;
+            this.labelDanger.Font = new System.Drawing.Font("Comic Sans MS", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDanger.Location = new System.Drawing.Point(1937, 121);
+            this.labelDanger.Name = "labelDanger";
+            this.labelDanger.Size = new System.Drawing.Size(77, 90);
+            this.labelDanger.TabIndex = 25;
+            this.labelDanger.Text = "0";
+            // 
             // Tetris99BotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2084, 891);
+            this.Controls.Add(this.labelDanger);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.buttonUR);
@@ -450,6 +462,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button buttonUR;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label labelDanger;
     }
 }
 

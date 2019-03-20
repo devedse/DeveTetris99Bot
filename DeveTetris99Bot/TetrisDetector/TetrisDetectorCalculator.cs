@@ -121,42 +121,51 @@ namespace DeveTetris99Bot.TetrisDetector
             return detectionData;
         }
 
-        private static bool DetectDanger(Bitmap data)
+        private static int DetectDanger(Bitmap data)
         {
             int pixelX = 451;
-            int pixelY = 664;
+            int pixelYStart = 664;
             int blockWidth = 32;
             int dingetje = blockWidth / 4;
 
-            var pixels = new List<Color>
+            int dangerCount = 0;
+
+            for (int y = 0; y < 20; y++)
             {
-                data.GetPixel(pixelX, pixelY),
-                data.GetPixel(pixelX - dingetje, pixelY - dingetje),
-                data.GetPixel(pixelX + dingetje, pixelY - dingetje),
-                data.GetPixel(pixelX - dingetje, pixelY + dingetje),
-                data.GetPixel(pixelX + dingetje, pixelY + dingetje)
-            };
+                var pixelY = pixelYStart - (y * blockWidth);
 
-            var avgHue = pixels.Average(t => t.GetHue());
-            var avgLightness = pixels.Average(t => Math.Max(Math.Max(t.R, t.G), t.B));
-
-
-            var l1 = pixels[0].GetBrightness();
-            var l2 = pixels[1].GetBrightness();
-            var l3 = pixels[2].GetBrightness();
-            var l4 = pixels[3].GetBrightness();
-            var l5 = pixels[4].GetBrightness();
-            
-
-
-            if (avgLightness > 190)
-            {
-                if (avgHue > 340 && avgHue < 358f)
+                var pixels = new List<Color>
                 {
-                    return true;
+                    data.GetPixel(pixelX, pixelY),
+                    data.GetPixel(pixelX - dingetje, pixelY - dingetje),
+                    data.GetPixel(pixelX + dingetje, pixelY - dingetje),
+                    data.GetPixel(pixelX - dingetje, pixelY + dingetje),
+                    data.GetPixel(pixelX + dingetje, pixelY + dingetje)
+                };
+
+                var avgHue = pixels.Average(t => t.GetHue());
+                var avgLightness = pixels.Average(t => Math.Max(Math.Max(t.R, t.G), t.B));
+
+
+                var l1 = pixels[0].GetBrightness();
+                var l2 = pixels[1].GetBrightness();
+                var l3 = pixels[2].GetBrightness();
+                var l4 = pixels[3].GetBrightness();
+                var l5 = pixels[4].GetBrightness();
+
+
+
+                if (avgLightness > 190)
+                {
+                    if (avgHue > 340 && avgHue < 358f)
+                    {
+                        dangerCount++;
+                    }
                 }
+                break;
             }
-            return false;
+
+            return dangerCount;
         }
 
         private static Tetrimino DetectNextBlock(Bitmap data, int stepX, int stepY, int xStart, int yStart, Graphics graphicsPanel2, int vakjeNummer)

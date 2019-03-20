@@ -55,6 +55,7 @@
     <Compile Include="Capture\DirectShowLib.cs" />
     <Compile Include="Capture\FakeDetector.cs" />
     <Compile Include="Capture\MyStreamWriter.cs" />
+    <Compile Include="Helpers\FrameDurationHelper.cs" />
     <Compile Include="TetrisDetector\TetrisDetectionData.cs" />
     <Compile Include="Config\TetrisConstants.cs" />
     <Compile Include="Helpers\IEnumerableExtensions.cs" />

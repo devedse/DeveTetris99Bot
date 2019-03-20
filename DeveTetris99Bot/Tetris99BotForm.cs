@@ -21,7 +21,7 @@ namespace DeveTetris99Bot
 
         protected override void OnLoad(EventArgs e)
         {
-            var realGame = new RealGame(this, panelSimulator, panelSimulatorBlocks, panelDanger, labelLinesCleared);
+            var realGame = new RealGame(this, panelSimulator, panelSimulatorBlocks, panelDanger, labelLinesCleared, labelDanger);
             tetrisPlayer = new Player(realGame, realGame);
 
 
