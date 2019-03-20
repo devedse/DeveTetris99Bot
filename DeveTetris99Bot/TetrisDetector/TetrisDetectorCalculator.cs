@@ -155,14 +155,14 @@ namespace DeveTetris99Bot.TetrisDetector
 
 
 
-                if (avgLightness > 190)
+                if (avgLightness > 190 && avgHue > 340 && avgHue < 358f)
                 {
-                    if (avgHue > 340 && avgHue < 358f)
-                    {
-                        dangerCount++;
-                    }
+                    dangerCount++;
                 }
-                break;
+                else
+                {
+                    break;
+                }
             }
 
             return dangerCount;
